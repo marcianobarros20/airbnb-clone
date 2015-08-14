@@ -19,7 +19,7 @@ class CreateListingsTable extends Migration
             $table->integer('price_cents');
             $table->text('summary');
             $table->integer('beds');
-            $table->integer('home_type');
+            $table->string('home_type');
             $table->string('city');
             $table->string('address');
             $table->string('status');

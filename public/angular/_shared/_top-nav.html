@@ -37,6 +37,8 @@
         <li><a href="#/inbox">Messages</a></li>
        
         <li><a href="#/listing/new">Submit a Spot</a></li>
+
+        <li ng-if="isAuthenticated()"><span ng-click="logout()">Sign out</span></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

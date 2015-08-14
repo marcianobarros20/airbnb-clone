@@ -9,9 +9,10 @@ angular.module('index', [])
 	};
 	$scope.layout = 'login'
 	// auth
-	$scope.login = function(){
-		$auth.login({email: $scope.email, password: $scope.password})
+	$scope.login = function(user){
+		$auth.login({email: user.email, password: user.password})
 		.then(function() {
+          $scope.modalInstance.dismiss('cancel');
           $scope.alerts.push({
             content: 'You have successfully logged in',
             animation: 'fadeZoomFadeDown',
@@ -29,14 +30,15 @@ angular.module('index', [])
         });
 	}
 
-	$scope.signup = function() {
+	$scope.signup = function(user) {
       $auth.signup({
-        displayName: $scope.displayName,
-        email: $scope.email,
-        password: $scope.password
+        name: user.name,
+        email: user.email,
+        password: user.password
       }).catch(function(response) {
         if (typeof response.data.message === 'object') {
           angular.forEach(response.data.message, function(message) {
+            $scope.modalInstance.dismiss('cancel');
             $scope.alerts.push({
               content: message[0],
               animation: 'fadeZoomFadeDown',
@@ -53,7 +55,14 @@ angular.module('index', [])
           });
         }
       });
-    };
+  };
+
+  $scope.logout = function(){
+    $auth.logout()
+          .then(function() {
+            
+      });
+  }
 
 	$scope.authenticate = function(provider){
 		$auth.authenticate(provider);

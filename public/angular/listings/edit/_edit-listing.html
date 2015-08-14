@@ -45,18 +45,35 @@
 				<p>What is unique about your place? What do you like about it?</p>
 				<div class="row">	
 					<div class="col-md-8">
-						<textarea ng-model="list.description" class="form-control" cols="30" rows="10"></textarea>
+						<textarea ng-model="list.summary" class="form-control" cols="30" rows="10"></textarea>
+					</div>
+				</div>
+				<h3>Type</h3>
+				<p>What will you be renting out?</p>
+				<div class="row">	
+					<div class="col-md-8">
+						<input type="text" ng-model="list.home_type" value="One Bedroom">
 					</div>
 				</div>
 			</section>
 				
 			<!-- Location -->
 			<section id="location">
-				<h3>Set Your Location</h3>
+				<h3>City</h3>
+				<p>This is important to narrowing down the search for users.</p>
+				<div class="row">	
+					<div class="col-md-6">
+						<label for="Address">City</label>
+						<input type="text" class="form-control" ng-model="list.city">
+					</div>
+				</div>
+
+				<h3>Set Your Address</h3>
+				<p>We do not share your full address until after the user has booked.</p>
 				<div class="row">	
 					<div class="col-md-6">
 						<label for="Address">Address</label>
-						<input type="text" class="form-control" ng-model="list.location">
+						<input type="text" class="form-control" ng-model="list.address">
 					</div>
 				</div>
 			</section>

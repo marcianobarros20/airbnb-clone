@@ -30,9 +30,9 @@ class ListingsController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+       
     }
 
     /**
@@ -43,7 +43,17 @@ class ListingsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         
+        $listings = new Listings;
+        $listings->title        =         $request->input('title');
+        $listings->price_cents  =    $request->input('price_cents');
+        $listings->summary      =       $request->input('summary');
+        $listings->city         =          $request->input('city');
+        $listings->home_type    =      $request->input('home_type');
+        $listings->city         =           $request->input('city');
+        $listings->address      =        $request->input('address');
+        $listings->save();
+
     }
 
     /**

@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Illuminate\Http\Request;
+use Hash;
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
-use JWT;
+use Firebase\JWT\JWT;
 
 class AuthController extends Controller
 {
@@ -73,7 +76,7 @@ class AuthController extends Controller
             'iat' => time(),
             'exp' => time() + (2 * 7 * 24 * 60 * 60)
         ];
-        return JWT::encode($payload, Config::get('app.token_secret'));
+        return JWT::encode($payload, \Config::get('app.token_secret'));
     }
 
     /**
@@ -95,7 +98,7 @@ class AuthController extends Controller
         }
         else
         {
-            return response()->json(['message' => 'Wrong email and/or password'], 401);
+            return response()->json(['message' => 'Wrong password'], 401);
         }
     }
     /**
@@ -104,7 +107,7 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'displayName' => 'required',
+            'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required'
         ]);

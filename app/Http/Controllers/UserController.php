@@ -19,7 +19,8 @@ class UserController extends Controller
 
 
 	public function listings()
-	{
+	{	
+
 		$listings = Listings::where('user_id', '=', 1)->get();
 
 		return response()->json($listings);

@@ -13,6 +13,10 @@ angular.module('app.editlisting', ['ui.calendar'])
 
   $scope.updateList = function(){
     console.log($scope.list);
+
+    var Listings = Restangular.all('listings');
+
+    Listings.post($scope.list);
   }
 
   var date = new Date();
