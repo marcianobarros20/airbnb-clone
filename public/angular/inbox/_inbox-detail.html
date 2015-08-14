@@ -1,0 +1,48 @@
+<!-- <ng-include src="'angular/_shared/_top-nav.html'"></ng-include> -->
+
+
+	<div class="row">
+		<div class="col-md-6">
+			<h3>Person's Detail</h3>
+			<div class="row">
+				<div class="col-md-3">
+					<a href="#/user/1">
+						<img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 100px; height: 100px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvNjR4NjQKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNGU0YjkxNGIzMyB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE0ZTRiOTE0YjMzIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxNC41IiB5PSIzNi41Ij42NHg2NDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
+					</a>
+				</div>
+				<div class="col-md-7">
+					Tim Bobbins {{id}}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<h3>Payment Summary</h3>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="panel panel-default">
+                <div class="panel-body chat-form">
+                    <textarea class="form-control" ng-model="inbox.body" rows="3"></textarea>
+                    <div class="pull-right">
+                        <button class="btn btn-default" type="submit">Approve / Decline</button>
+                        <button class="btn btn-default" ng-click="submitChat(inbox)" type="submit">Button</button>
+                    </div>
+                </div>
+            </div>
+			<div ng-repeat="message in messages" class="row chat-inbox">
+				<div class="col-md-1 col-sm-4">
+					<span>
+						<img class="img-circle" src="{{message.avatar}}" alt="">
+					</span>
+				</div>
+				<div class="col-md-10 col-sm-8">
+					<div class="chat-body">
+						<p>{{message.body}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+

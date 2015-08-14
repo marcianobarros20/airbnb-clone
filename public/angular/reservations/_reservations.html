@@ -1,0 +1,32 @@
+<ng-include src="'angular/_shared/_top-nav.html'"></ng-include>
+<ng-include src="'angular/_shared/dashboard.html'"></ng-include>
+
+<div class="container-fluid page reservation-page">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="panel-title">
+				Reservations
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table panel-body">
+				<thead>
+					<tr>
+						<th>Status</th>
+						<th>Dates / Location</th>
+						<th>Guest</th>
+						<th>Details</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="reservation in reservations">
+						<td>{{reservation.status}}</td>
+						<td>{{reservation.date}}</td>
+						<td>{{reservation.host.name}}</td>
+						<td>${{reservation.details}} total</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
