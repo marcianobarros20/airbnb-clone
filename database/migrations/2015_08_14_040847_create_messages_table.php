@@ -12,7 +12,13 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-        //
+         Schema::create('messages', function (Blueprint $table) {
+            $table->integer('booking_id');
+            $table->integer('user_id');
+            $table->text('content');
+            $table->string('unread');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -22,6 +28,6 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('messages');
     }
 }

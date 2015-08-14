@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Listings;
-use App\Bookings;
-
 use Illuminate\Http\Request;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use DB;
-
-class ListingsController extends Controller
+class MessagesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +16,7 @@ class ListingsController extends Controller
      */
     public function index()
     {
-        $listings = Listings::orderBy('created_at', 'DESC')->simplePaginate(10);
-        return response()->json($listings);
-
+        //
     }
 
     /**
@@ -89,22 +83,5 @@ class ListingsController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function search($location, $checkin, $checkout)
-    {
-
-        $booked = DB::table('bookings')
-            ->where('location', 'like', $location)
-            ->whereNotBetween('checkin', $checkin)
-            ->whereNotBetween('checkout', $checkout)
-            -get();
-
-        $listings = DB::table('listings')
-            ->where('location', 'like', $location)
-            ->whereNotIn('id', $booked)
-            ->get();
-
-        return response()->json($listings);
     }
 }

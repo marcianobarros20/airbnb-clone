@@ -22,5 +22,7 @@ Route::group(array('prefix' => 'api/v1'), function()
 {
 	Route::resource('listings', 'ListingsController');
 	Route::resource('bookings', 'BookingsController');
+	Route::resource('messages', 'MessagesController');
+
 	Route::get('search/listings', 'ListingsController@search');
 });

@@ -21,7 +21,7 @@ class CreateListingsTable extends Migration
             $table->integer('beds');
             $table->integer('home_type');
             $table->string('city');
-            $table->address('address');
+            $table->string('address');
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\Listings;
+Use App\Bookings;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,12 +16,16 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call(UserTableSeeder::class);
+        $this->call(ListingsTableSeeder::class);
+        $this->call(BookingsTableSeeder::class);
 
         Model::reguard();
     }
 
-    class UsersTableSeeder extends Seeder {
+}
+
+class ListingsTableSeeder extends Seeder 
+{
 
     public function run()
     {
@@ -29,7 +34,7 @@ class DatabaseSeeder extends Seeder
         DB::table('listings')->delete();
 
         $listings = array(
-                ['title' => 'Cozy Studio in Gold Coast', 'user_id' => '1', 'price_cents' => '89', 'city' => 'Chicago, IL', 'text' => 'An awesome place']
+                ['title' => 'Cozy Studio in Gold Coast', 'user_id' => '1', 'price_cents' => '89', 'city' => 'Chicago, IL', 'summary' => 'An awesome place']
                 
         );
             
@@ -40,4 +45,25 @@ class DatabaseSeeder extends Seeder
         }
     }
 }
+
+class BookingsTableSeeder extends Seeder 
+{
+
+    public function run()
+    {
+            
+        // We want to delete the users table if it exists before running the seed
+        DB::table('bookings')->delete();
+
+        $bookings = array(
+                ['user_id' => '1', 'listing_id' => '1', 'checkin' => '456456', 'checkout' => '23452345', 'status' => 'Booked']
+                
+        );
+            
+        // Loop through each user above and create the record for them in the database
+        foreach ($bookings as $booking)
+        {
+            Bookings::create($booking);
+        }
+    }
 }
