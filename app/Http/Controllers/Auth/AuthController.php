@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
+use JWT;
+
 class AuthController extends Controller
 {
     /*
@@ -61,5 +63,106 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+
+    protected function createToken($user)
+    {
+        $payload = [
+            'sub' => $user->id,
+            'iat' => time(),
+            'exp' => time() + (2 * 7 * 24 * 60 * 60)
+        ];
+        return JWT::encode($payload, Config::get('app.token_secret'));
+    }
+
+    /**
+      * Log in with Email and Password.
+     */
+     public function login(Request $request)
+     {
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $user = User::where('email', '=', $email)->first();
+        if (!$user)
+        {
+            return response()->json(['message' => 'Wrong email and/or password'], 401);
+        }
+        if (Hash::check($password, $user->password))
+        {
+            unset($user->password);
+            return response()->json(['token' => $this->createToken($user)]);
+        }
+        else
+        {
+            return response()->json(['message' => 'Wrong email and/or password'], 401);
+        }
+    }
+    /**
+     * Create Email and Password Account.
+     */
+    public function signup(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'displayName' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->messages()], 400);
+        }
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+        return response()->json(['token' => $this->createToken($user)]);
+    }
+
+    public function facebook(Request $request)
+    {
+        $accessTokenUrl = 'https://graph.facebook.com/v2.3/oauth/access_token';
+        $graphApiUrl = 'https://graph.facebook.com/v2.3/me';
+        $params = [
+            'code' => $request->input('code'),
+            'client_id' => $request->input('clientId'),
+            'redirect_uri' => $request->input('redirectUri'),
+            'client_secret' => Config::get('app.facebook_secret')
+        ];
+        $client = new GuzzleHttp\Client();
+        // Step 1. Exchange authorization code for access token.
+        $accessToken = $client->get($accessTokenUrl, ['query' => $params])->json();
+        // Step 2. Retrieve profile information about the current user.
+        $profile = $client->get($graphApiUrl, ['query' => $accessToken])->json();
+        // Step 3a. If user is already signed in then link accounts.
+        if ($request->header('Authorization'))
+        {
+            $user = User::where('facebook', '=', $profile['id']);
+            if ($user->first())
+            {
+                return response()->json(['message' => 'There is already a Facebook account that belongs to you'], 409);
+            }
+            $token = explode(' ', $request->header('Authorization'))[1];
+            $payload = (array) JWT::decode($token, Config::get('app.token_secret'), array('HS256'));
+            $user = User::find($payload['sub']);
+            $user->facebook = $profile['id'];
+            $user->displayName = $user->displayName || $profile['name'];
+            $user->save();
+            return response()->json(['token' => $this->createToken($user)]);
+        }
+        // Step 3b. Create a new user account or return an existing one.
+        else
+        {
+            $user = User::where('facebook', '=', $profile['id']);
+            if ($user->first())
+            {
+                return response()->json(['token' => $this->createToken($user->first())]);
+            }
+            $user = new User;
+            $user->facebook = $profile['id'];
+            $user->displayName = $profile['name'];
+            $user->save();
+            return response()->json(['token' => $this->createToken($user)]);
+        }
     }
 }

@@ -20,14 +20,8 @@ angular.module('app.search', ['rzModule'])
     });
   }
 
-	$scope.results = Restangular.one('search').getList('listings',
-		{
-      location: $scope.location,
-      checkin: $stateParams['checkin'],
-      checkout: $stateParams['checkout']
-    }).$object;
-
-  console.log($scope.results);
+	//$scope.results = Restangular.one('search', $scope.location, $stateParams['checkin'], $stateParams['checkout']).getList().$object;
+  $scope.results = Restangular.one('search').one('location', $scope.location).one('checkin', $stateParams['checkin']).one('checkout', $stateParams['checkout']).getList().$object;
 
 
   $scope.priceSlider = {

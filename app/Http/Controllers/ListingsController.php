@@ -95,16 +95,16 @@ class ListingsController extends Controller
     {
 
         $booked = DB::table('bookings')
-            ->where('location', 'like', $location)
-            ->whereNotBetween('checkin', $checkin)
-            ->whereNotBetween('checkout', $checkout)
-            -get();
+            ->whereNotBetween('checkin', [$checkin, $checkout])
+            ->whereNotBetween('checkout', [$checkin, $checkout])
+            ->lists('listing_id');
 
         $listings = DB::table('listings')
-            ->where('location', 'like', $location)
+            ->where('city', 'LIKE', '%'.$location.'%')
             ->whereNotIn('id', $booked)
             ->get();
 
         return response()->json($listings);
+
     }
 }

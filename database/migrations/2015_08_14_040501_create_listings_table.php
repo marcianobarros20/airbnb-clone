@@ -22,6 +22,7 @@ class CreateListingsTable extends Migration
             $table->integer('home_type');
             $table->string('city');
             $table->string('address');
+            $table->string('status');
             $table->timestamps();
         });
     }

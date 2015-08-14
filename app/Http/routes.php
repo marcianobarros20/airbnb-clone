@@ -15,6 +15,8 @@ Route::get('/', function(){
 	return view('index');
 });
 
+Route::post('auth/facebook', 'Auth\AuthController@facebook');
+
 
 // API
 
@@ -24,5 +26,6 @@ Route::group(array('prefix' => 'api/v1'), function()
 	Route::resource('bookings', 'BookingsController');
 	Route::resource('messages', 'MessagesController');
 
-	Route::get('search/listings', 'ListingsController@search');
+	Route::get('user/listings', 'UserController@listings');
+	Route::get('search/location/{location}/checkin/{checkin}/checkout/{checkout}', 'ListingsController@search');
 });

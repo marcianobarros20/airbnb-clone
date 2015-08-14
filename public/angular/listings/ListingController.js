@@ -1,22 +1,12 @@
 
 angular.module('app.listings', [])
 
-.controller('ListingsController', function($scope){
+.controller('ListingsController', function($scope, Restangular){
 	
 	var getListings = function(){
 
-		$scope.listings = [
-			{
-				"id": "1",
-				"title": "Cozy Place",
-				"status": "Listed"
-			},
-			{
-				"id": "2",
-				"title": "Warm Studio",
-				"status": "NotListed"
-			}
-		]
+		$scope.listings = Restangular.one('user').getList('listings').$object;
+
 	}
 
 	getListings();
