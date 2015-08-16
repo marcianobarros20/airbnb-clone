@@ -28,6 +28,8 @@ angular.module('app.inbox', [])
 				"created_at": "June 2"
 			}
 		]
+
+		
 	};
 
 	getMessages();

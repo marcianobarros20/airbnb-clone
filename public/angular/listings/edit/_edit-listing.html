@@ -3,9 +3,9 @@
 
 <div class="container page edit-listing">
 	<div class="row">	
-		<div class="col-md-3 hidden-xs">
+		<!-- <div class="col-md-3 hidden-xs">
 			<ng-include src="'angular/_shared/listing-nav.html'"></ng-include>	
-		</div>
+		</div> -->
 		<div class="col-md-9">
 			<!-- Title -->
 			<section>
@@ -19,7 +19,7 @@
 			<!-- Calendar -->
 			<section id="calendar">	
 				<h3>Calendar</h3>
-				<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div> 
+				<div ui-calendar="uiConfig.calendar" class="span6 calendar" ng-model="eventSources"></div> 
 			</section>
 			<!-- Pricing -->
 			<section id="pricing">
@@ -33,6 +33,49 @@
 				      </div>
 				    </div>
 				</div>
+			</section>
+
+			<!-- photos -->
+			<section id="photos">
+			<h3>Listing Photos</h3>
+			<div id="direct_upload" 
+		    ng-file-drop
+		    ng-file-drag-over-class="dragOverClass($event)"
+		    ng-model="files"
+		    ng-multiple="true">
+		    <p>You can also drag and drop an image file into the dashed area.</p>
+		    <form>
+		        <div class="form_line">
+		            <label path="title">Title:</label>
+		            <div class="form_controls">
+		                <input type="text" class="form-control" placeholder="Title" ng-model="title"/>
+		            </div>
+		        </div>
+		        <div class="form_line">
+		            <label>Image:</label>
+		            <div class="form_controls">
+		                <div class="upload_button_holder">
+		                    <div href="#" class="upload_button" ng-file-select ng-multiple="true" title="upload" resetOnClick="true" ng-model="files">Upload</div>
+		                </div>
+		                
+		            </div>
+		        </div>
+		    </form>
+		    <h5>Status</h5>
+		    <div class="file" ng-repeat="file in files">
+		        <div class="status">{{file.status}}</div>
+		        <div class="progress-bar">
+		          <div class="progress" style="width: {{file.progress}}%" ng-init="progress=0"></div>
+		        </div>
+		    </div>
+
+			<ul class="listings-photos">
+				<li ng-repeat="image in list.images">
+					<img ng-src="{{image.url}}" alt="" height="150" width="150">
+				</li>
+			</ul>
+			    
+			</div>
 			</section>
 			<!-- Basics -->
 			<section id="basics">
@@ -48,11 +91,17 @@
 						<textarea ng-model="list.summary" class="form-control" cols="30" rows="10"></textarea>
 					</div>
 				</div>
+				<!-- Home Type -->
 				<h3>Type</h3>
 				<p>What will you be renting out?</p>
 				<div class="row">	
 					<div class="col-md-8">
-						<input type="text" ng-model="list.home_type" value="One Bedroom">
+						<select ng-model="list.home_type">
+							<option value="One Bedroom">One Bedroom</option>
+							<option value="Entire Home">Entire Home</option>
+							<option value="Family Home">Family Home</option>
+							<option value="Couch">Couch</option>
+						</select>
 					</div>
 				</div>
 			</section>
@@ -81,11 +130,6 @@
 			<!-- Amenities -->
 			<section id="amenities">	
 
-			</section>
-
-			<!-- Photos -->
-			<section id="photos">
-				
 			</section>
 
 			<!-- Save -->

@@ -43,7 +43,7 @@ angular.module('app.search', ['rzModule'])
 	}
 
   $scope.filterRoomType = function(type){
-    $scope.room_type = type;
+    $scope.home_type = type;
   }
 
   $scope.min = function(actual, expected) {

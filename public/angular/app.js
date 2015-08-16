@@ -13,7 +13,9 @@ angular.module('app', [
     'app.reservations',
     'app.inbox-detail',
     'app.room',
-    'app.editlisting'
+    'app.editlisting',
+    'cloudinary',
+    'angularFileUpload'
 ])
 
 
@@ -34,8 +36,8 @@ angular.module('app', [
             	templateUrl: 'angular/users/show/_user-detail.html',
                 controller: 'UserShowController'
             }).
-            state('user/edit/:id', {
-                url: '/users/edit/:id',
+            state('user/edit/profile', {
+                url: '/users/edit/profile',
                 templateUrl: 'angular/users/edit/_user-edit.html',
                 controller: 'UserEditController'
             }).
@@ -49,11 +51,7 @@ angular.module('app', [
                 templateUrl: 'angular/inbox/_inbox.html',
                 controller: 'InboxController'
             }).
-            state('inbox.detail', {
-                url: '/:id',
-                templateUrl: 'angular/inbox/_inbox-detail.html',
-                controller: 'InboxDetailController'
-            }).
+         
             state('listings', {
                 url: '/listings',
                 templateUrl: 'angular/listings/_listings.html',
@@ -78,6 +76,22 @@ angular.module('app', [
                 url: '/reservations',
                 templateUrl: 'angular/reservations/_reservations.html',
                 controller: 'ReservationsController',
+                resolve: {
+                  authenticated: authenticate
+                }
+            }).
+            state('trips', {
+                url: '/trips',
+                templateUrl: 'angular/reservations/_reservations.html',
+                controller: 'ReservationsController',
+                resolve: {
+                  authenticated: authenticate
+                }
+            }).
+            state('trips/:hostid/inbox/:userid', {
+                url: '/trips/:hostid/inbox/:userid',
+                templateUrl: 'angular/inbox/_inbox-detail.html',
+                controller: 'InboxDetailController',
                 resolve: {
                   authenticated: authenticate
                 }

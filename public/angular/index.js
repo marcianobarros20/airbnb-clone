@@ -1,24 +1,19 @@
 
 angular.module('index', [])
 
-.controller('index', function($scope, $auth, $modal){
+.controller('index', function($scope, $auth, $modal, $http, $location){
 
 	$scope.alerts = [];
 	$scope.closeAlert = function(index) {
 	    $scope.alerts.splice(index, 1);
 	};
 	$scope.layout = 'login'
-	// auth
+
 	$scope.login = function(user){
 		$auth.login({email: user.email, password: user.password})
 		.then(function() {
           $scope.modalInstance.dismiss('cancel');
-          $scope.alerts.push({
-            content: 'You have successfully logged in',
-            animation: 'fadeZoomFadeDown',
-            type: 'success',
-            duration: 3
-          });
+          $location.path('/users/edit/profile');
         })
         .catch(function(response) {
           $scope.alerts.push({
@@ -35,16 +30,17 @@ angular.module('index', [])
         name: user.name,
         email: user.email,
         password: user.password
-      }).catch(function(response) {
+      }).then(function(){
+        $scope.modalInstance.dismiss('cancel');
+        $location.path('/user/edit/profile');
+      })
+      .catch(function(response) {
         if (typeof response.data.message === 'object') {
-          angular.forEach(response.data.message, function(message) {
-            $scope.modalInstance.dismiss('cancel');
-            $scope.alerts.push({
-              content: message[0],
-              animation: 'fadeZoomFadeDown',
-              type: 'success',
-              duration: 3
-            });
+          $scope.alerts.push({
+            content: response.data.message,
+            animation: 'fadeZoomFadeDown',
+            type: 'danger',
+            duration: 3
           });
         } else {
           $scope.alerts.push({
@@ -58,10 +54,8 @@ angular.module('index', [])
   };
 
   $scope.logout = function(){
-    $auth.logout()
-          .then(function() {
-            
-      });
+    $auth.logout();
+    $http.get('/auth/logout');
   }
 
 	$scope.authenticate = function(provider){

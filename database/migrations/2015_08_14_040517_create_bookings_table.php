@@ -13,10 +13,13 @@ class CreateBookingsTable extends Migration
     public function up()
     {
         Schema::create('bookings', function (Blueprint $table) {
-            $table->integer('user_id');
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('host_id');
             $table->integer('listing_id');
-            $table->string('checkin');
-            $table->string('checkout');
+            $table->bigInteger('checkin');
+            $table->bigInteger('checkout');
             $table->string('status');
             $table->timestamps();
         });

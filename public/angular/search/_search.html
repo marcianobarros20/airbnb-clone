@@ -40,13 +40,13 @@
 			<div class="col-md-9">
 				<ul class="list-inline">
 					<li>
-						<div ng-click="filterRoomType('')"> All</div>
+						<div class="btn btn-default" ng-click="filterRoomType('')"> All</div>
 					</li>
 					<li>
-						<div ng-click="filterRoomType('one_bedroom')"><span></span> One Bedroom</div>
+						<div class="btn btn-default" ng-click="filterRoomType('one_bedroom')"><span></span> One Bedroom</div>
 					</li>
 					<li>
-						<div ng-click="filterRoomType('entire_home')"><span></span> Entire home/apt</div>
+						<div class="btn btn-default" ng-click="filterRoomType('entire_home')"><span></span> Entire home/apt</div>
 					</li>
 				</ul>
 			</div>
@@ -62,21 +62,23 @@
 		<!-- search results -->
 			<div class="col-md-12">
 				<div class="search-results">
-					<h4>{{location}}</h4>
+					<h4>location: {{location}}</h4>
 					<p>Your search yielded {{filtered.length}} results. Enable filters to narrow your results.</p>
-
+					
+					<div ng-if="!filtered.length">
+						<h3>There are currently no listings you requested. Please help spread the word!</h3>
+					</div>
 					<div class="row">
-
 							<div ng-repeat="listing in filtered = (results
-											| filter:{room_type:room_type}
-											| filter:{price_cents: 100*priceSlider.max}:max
-											| filter:{price_cents: 100*priceSlider.min}:min)" class="col-md-4 col-sm-4">
+											| filter:{home_type:home_type}
+											| filter:{price_cents: priceSlider.max}:max
+											| filter:{price_cents: priceSlider.min}:min)" class="col-md-4 col-sm-4">
 								<div class="thumbnail" ng-click="checkPlace(listing.id)">
-									<img class="img-responsive" ng-src="{{listing.images[0]}}">
-									<div class="listing-price"><span>${{listing.price_cents/100}}</span></div>
+									<img class="img-responsive" ng-src="{{listing.photos[0]}}">
+									<div class="listing-price"><span>${{listing.price_cents}}</span></div>
 									<div class="caption">
 										<p>{{listing.title}}</p>
-										<p class="room-type">{{listing.room_type}}</p>
+										<p class="room-type">{{listing.home_type}}</p>
 									</div>
 								</div>
 							</div>

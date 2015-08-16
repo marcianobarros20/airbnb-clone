@@ -4,33 +4,29 @@ angular.module('app.room', [])
   $scope.checkin  = new Date(parseInt($stateParams['checkin']));
   $scope.checkout = new Date(parseInt($stateParams['checkout']));
 
+  var listing = Restangular.one('listings', $stateParams['id']);
 	
   var getList = function(){
-		$scope.list = Restangular.one('listing', $stateParams['id']).get().$object;
-	};
+		$scope.list = listing.get().$object;
+  };
 
-	var getListReviews = function(){
-		$scope.listing_reviews = [
-			{
-				"guest": "John Doe",
-				"comment": "Great location",
-				"from": "Los Angeles",
-				"created_at": "June 6th",
-				"rating": 4
-			},
-			{
-				"guest": "John Doe",
-				"comment": "It was okay.",
-				"from": "Los Angeles",
-				"created_at": "June 6th",
-				"rating": 5
-			}
-		];
-	};
+  $scope.getTotalPrice = function(){
+    var oneDay = 24*60*60*1000;
+    return Math.round(Math.abs(($scope.checkin - $scope.checkout)) / (oneDay)) * $scope.list['price_cents'];
+  }
+
 
   $scope.book = function(){
-    console.log($scope.list['id']);
-    console.log(Date.parse($scope.checkin) + ' to ' + Date.parse($scope.checkout));
+    var booking = {
+      'listings_id': $stateParams['id'],
+      'checkin': Date.parse($scope.checkin),
+      'checkout': Date.parse($scope.checkout),
+      'host_id': $scope.list['user_id'],
+      'status' : 'Pending'
+    };
+
+    var Bookings = Restangular.all('bookings');
+    Bookings.post(booking);
   }
 
   $scope.open = function($event, open) {
@@ -43,7 +39,6 @@ angular.module('app.room', [])
 
   var initialize = function(){
     getList();
-    getListReviews();
   };
 
   initialize();

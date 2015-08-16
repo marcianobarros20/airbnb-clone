@@ -17,6 +17,7 @@ Route::get('/', function(){
 
 Route::post('auth/facebook', 'Auth\AuthController@facebook');
 Route::post('auth/login', 'Auth\AuthController@login');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::post('auth/signup', 'Auth\AuthController@signup');
 
 
@@ -27,9 +28,14 @@ Route::group(array('prefix' => 'api/v1'), function()
 	Route::resource('listings', 'ListingsController');
 	Route::resource('bookings', 'BookingsController');
 	Route::resource('messages', 'MessagesController');
+	// user profile
+	Route::get('user', 'UserController@getUser');
+	Route::get('user/listings', 'UserController@getListings');
+	Route::put('user', 'UserController@updateUser');
+	Route::get('user/reservations', 'UserController@getReservations');
+	Route::get('user/trips', 'UserController@getTrips');
+	// other users
+	Route::get('user/{id}', 'UserController@showUser');
 
-	//Route::post('listings', 'ListingsController@create');
-
-	Route::get('user/listings', 'UserController@listings');
 	Route::get('search/location/{location}/checkin/{checkin}/checkout/{checkout}', 'ListingsController@search');
 });

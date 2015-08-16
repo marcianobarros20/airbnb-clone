@@ -1,9 +1,16 @@
 angular.module('app.useredit', [])
 
-.controller('UserEditController', function($scope){
+.controller('UserEditController', function($scope, Restangular, $http){
 
-	$scope.saveUser = function(user){
-		console.log(User);
+
+	var user = Restangular.one('user').get().$object;
+
+
+	$scope.user = user;
+
+	$scope.saveUser = function(){
+		console.log($scope.user);
+		$http.put('/api/v1/user', $scope.user);
 	};
 
 });

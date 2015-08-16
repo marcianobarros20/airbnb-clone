@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+
+use Auth;
 use App\User;
 use Validator;
 use Illuminate\Http\Request;
@@ -94,6 +96,7 @@ class AuthController extends Controller
         if (Hash::check($password, $user->password))
         {
             unset($user->password);
+            Auth::loginUsingId($user->id);
             return response()->json(['token' => $this->createToken($user)]);
         }
         else
@@ -119,7 +122,15 @@ class AuthController extends Controller
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->save();
+
+        Auth::login($user);
         return response()->json(['token' => $this->createToken($user)]);
+    }
+
+    //  log out
+    public function getLogout()
+    {
+        Auth::logout();
     }
 
     public function facebook(Request $request)

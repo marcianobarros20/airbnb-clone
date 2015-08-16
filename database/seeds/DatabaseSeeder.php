@@ -57,7 +57,7 @@ class BookingsTableSeeder extends Seeder
         DB::table('bookings')->delete();
 
         $bookings = array(
-                ['user_id' => '1', 'listing_id' => '1', 'checkin' => '456456', 'checkout' => '23452345', 'status' => 'Booked']
+                ['user_id' => '1', 'host_id' => '2', 'listing_id' => '1', 'checkin' => '456456', 'checkout' => '23452345', 'status' => 'Booked']
                 
         );
             

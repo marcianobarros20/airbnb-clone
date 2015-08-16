@@ -46,7 +46,8 @@
 			  </div>
 			  <div class="row">
 			  	<div class="col-md-12">
-			  		<button class="btn btn-lg btn-success" ng-click="book()">Book</button>
+			  		
+			  		<button class="btn btn-lg btn-success" ng-click="book()">Request to Book ${{getTotalPrice()}}</button>
 			  	</div>
 			  </div>
 		</div>
@@ -70,7 +71,7 @@
 	<!-- Listing Review -->
 	<section class="row">
 		<h4 class="center-text">Reviews</h4>
-		<div ng-repeat="review in listing_reviews">
+		<div ng-repeat="review in list.reviews">
 			<div class="media">
 			  <div class="media-left">
 			    <a href="#">

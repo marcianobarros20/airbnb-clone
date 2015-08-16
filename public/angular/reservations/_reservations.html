@@ -1,11 +1,11 @@
 <ng-include src="'angular/_shared/_top-nav.html'"></ng-include>
 <ng-include src="'angular/_shared/dashboard.html'"></ng-include>
 
-<div class="container-fluid page reservation-page">
+<div class="container page reservation-page">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="panel-title">
-				Reservations
+				{{pageName}}
 			</div>
 		</div>
 		<div class="table-responsive">
@@ -13,17 +13,17 @@
 				<thead>
 					<tr>
 						<th>Status</th>
-						<th>Dates / Location</th>
-						<th>Guest</th>
-						<th>Details</th>
+						<th>Dates</th>
+						<th>{{recipient}}</th>
+						<th>Location</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="reservation in reservations">
-						<td>{{reservation.status}}</td>
-						<td>{{reservation.date}}</td>
-						<td>{{reservation.host.name}}</td>
-						<td>${{reservation.details}} total</td>
+					<tr ng-repeat="result in results">
+						<td><span class="badge">{{result.status}}</span></td>
+						<td>{{result.date}}</td>
+						<td>{{result.name}}</td>
+						<td>{{result.address}}</td>
 					</tr>
 				</tbody>
 			</table>

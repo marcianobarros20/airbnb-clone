@@ -1,10 +1,14 @@
 angular.module('app.editlisting', ['ui.calendar'])
-.controller('EditListController', function($scope, $stateParams, $anchorScroll, $location, Restangular, uiCalendarConfig){
+.controller('EditListController', function($scope, $upload, $stateParams, $rootScope, $anchorScroll, $location, Restangular, uiCalendarConfig){
 
-  var id = $stateParams['id']
+  var id = $stateParams['id'];
   var getList = function(){
-		$scope.list = Restangular.one('listing', id).get().$object;
+		$scope.list = Restangular.one('listings', id).get().$object;
 	};
+
+  $scope.list = {
+    'images': []
+  };
 
   $scope.scrollTo = function(id){
     $location.hash(id);
@@ -12,11 +16,14 @@ angular.module('app.editlisting', ['ui.calendar'])
   }
 
   $scope.updateList = function(){
-    console.log($scope.list);
+    if (id){
+      var Listings = Restangular.all('listings');
+      Listings.post($scope.list);
+    } else {
+      $http.put('api/v1/listings/' + id, $scope.list);
+    }
+   
 
-    var Listings = Restangular.all('listings');
-
-    Listings.post($scope.list);
   }
 
   var date = new Date();
@@ -36,7 +43,51 @@ angular.module('app.editlisting', ['ui.calendar'])
           backgroundColor: '#e2e2e2' 
       }
   ;
-  console.log($scope.eventSources);
+  
+  $scope.$watch('files', function() {
+      if (!$scope.files) return;
+      $scope.files.forEach(function(file){
+        $scope.upload = $upload.upload({
+          url: "https://api.cloudinary.com/v1_1/world-lens/image/upload",
+          data: {upload_preset: 'gxramofi', tags: 'myphotoalbum', context:'photo=' + $scope.title},
+          file: file
+        }).progress(function (e) {
+          file.progress = Math.round((e.loaded * 100.0) / e.total);
+          file.status = "Uploading... " + file.progress + "%";
+          if(!$scope.$$phase) {
+            $scope.$apply();
+          }
+        }).success(function (data, status, headers, config) {
+          $rootScope.photos = $rootScope.photos || [];
+          data.context = {custom: {photo: $scope.title}};
+          file.result = data;
+          $scope.list.images.push(data)
+          $rootScope.photos.push(data);
+          if(!$scope.$$phase) {
+            $scope.$apply();
+          }
+        }).error(function(data, status, headers, config){
+          console.log('error' + status + ' data' + config);
+        });
+      });
+  });
+
+  /* Modify the look and fill of the dropzone when files are being dragged over it */
+  $scope.dragOverClass = function($event) {
+      var items = $event.dataTransfer.items;
+      var hasFile = false;
+      if (items != null) {
+        for (var i = 0 ; i < items.length; i++) {
+          if (items[i].kind == 'file') {
+            hasFile = true;
+            break;
+          }
+        }
+      } else {
+        hasFile = true;
+      }
+      return hasFile ? "dragover" : "dragover-err";
+    };
 
   /* config object */
   $scope.uiConfig = {

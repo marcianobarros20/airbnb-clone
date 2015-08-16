@@ -21,6 +21,8 @@
     "angularjs-slider": "latest",
     "restangular": "latest",
     "satellizer": "latest",
-    "angular-ui-calendar": "latest"
+    "angular-ui-calendar": "latest",
+    "ng-file-upload": "2.2.x",
+    "cloudinary_ng": ">=0.1.1"
   }
 }

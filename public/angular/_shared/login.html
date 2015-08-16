@@ -16,7 +16,6 @@
           </form>
           <br>
 
-          <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.content}}</alert>
 
           <p class="text-center">
               <a href="#">Forgot your password?</a>
@@ -51,6 +50,8 @@
             <p class="text-center text-muted">Already have an account? <a ng-click="layout = 'login'">Log in now</a></p>
           </form>
       </div>
+
+      <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.content}}</alert>
 
       <div class="signup-or-separator">
           <h6 class="text-center">or</h6>

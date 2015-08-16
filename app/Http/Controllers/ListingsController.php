@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Listings;
 use App\Bookings;
+use App\ListingsReviews;
+use App\ListingsPhotos;
+use App\User;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -52,7 +56,15 @@ class ListingsController extends Controller
         $listings->home_type    =      $request->input('home_type');
         $listings->city         =           $request->input('city');
         $listings->address      =        $request->input('address');
+        $listings->user_id      =       Auth::user()->id;
         $listings->save();
+
+        foreach($request['images'] as $image){
+            $listings_photos = new ListingsPhotos;
+            $listings_photos->url           = $image['url'];
+            $listings_photos->listing_id    = $listings->id;
+            $listings_photos->save();
+        }
 
     }
 
@@ -64,7 +76,12 @@ class ListingsController extends Controller
      */
     public function show($id)
     {
-        //
+        $listing = Listings::find($id);
+        $listing->user;
+        $listing->reviews;
+        $listing->images;
+
+        return response()->json($listing);
     }
 
     /**
@@ -75,7 +92,7 @@ class ListingsController extends Controller
      */
     public function edit($id)
     {
-        //
+       
     }
 
     /**
@@ -87,11 +104,26 @@ class ListingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $listings = Listings::find($id);
+        $listings->title        =         $request->input('title');
+        $listings->price_cents  =    $request->input('price_cents');
+        $listings->summary      =       $request->input('summary');
+        $listings->city         =          $request->input('city');
+        $listings->home_type    =      $request->input('home_type');
+        $listings->city         =           $request->input('city');
+        $listings->address      =        $request->input('address');
+        $listings->save();
+
+        foreach($request['images'] as $image){
+            $listings_photos = new ListingsPhotos;
+            $listings_photos->url           = $image['url'];
+            $listings_photos->listings_id    = $listings->id;
+            $listings_photos->save();
+        }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage. 1440651600000 < 1440910800000
      *
      * @param  int  $id
      * @return Response
@@ -105,16 +137,17 @@ class ListingsController extends Controller
     {
 
         $booked = DB::table('bookings')
-            ->whereNotBetween('checkin', [$checkin, $checkout])
-            ->whereNotBetween('checkout', [$checkin, $checkout])
+            ->where('checkin', '<=', $checkout)
+            ->where('checkout', '>=', $checkin)
             ->lists('listing_id');
 
         $listings = DB::table('listings')
             ->where('city', 'LIKE', '%'.$location.'%')
+            ->where('status', '=', 'Listed')
             ->whereNotIn('id', $booked)
             ->get();
 
-        return response()->json($listings);
+       return response()->json($listings);
 
     }
 }

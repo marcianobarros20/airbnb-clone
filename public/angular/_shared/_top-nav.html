@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default" ng-controller="HomeController">
-  <div class="container-fluid">
+  <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -8,7 +8,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/#/">ummaspot</a>
+      <a class="navbar-brand" href="/#/">
+        <img src="logo2.png" alt="UmmaSpot Logo">
+      </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,16 +31,17 @@
             <a href="#" class="dropdown-toggle" ng-click="loginModal('sm')">Login</a>
         </li>
         <li class="dropdown" ng-if="isAuthenticated()">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My Profile <span class="caret"></span></a>
+            <a href="#/users/edit/profile" class="dropdown-toggle">My Profile </a><!-- <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li><a href="#">Action</a></li>
-            </ul>
+            </ul> -->
+
         </li>
         <li><a href="#/inbox">Messages</a></li>
        
         <li><a href="#/listing/new">Submit a Spot</a></li>
 
-        <li ng-if="isAuthenticated()"><span ng-click="logout()">Sign out</span></li>
+        <li ng-if="isAuthenticated()"><a ng-click="logout()">Sign out</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
