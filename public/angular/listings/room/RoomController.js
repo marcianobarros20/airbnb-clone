@@ -1,5 +1,5 @@
 angular.module('app.room', [])
-.controller('RoomController', function($scope, $stateParams, Restangular){
+.controller('RoomController', function($scope, $stateParams, Restangular, $state){
 
   $scope.checkin  = new Date(parseInt($stateParams['checkin']));
   $scope.checkout = new Date(parseInt($stateParams['checkout']));
@@ -27,6 +27,8 @@ angular.module('app.room', [])
 
     var Bookings = Restangular.all('bookings');
     Bookings.post(booking);
+
+    $state.go('trips');
   }
 
   $scope.open = function($event, open) {

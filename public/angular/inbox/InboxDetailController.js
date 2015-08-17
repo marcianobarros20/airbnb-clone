@@ -1,6 +1,6 @@
 angular.module('app.inbox-detail', [])
 
-.controller('InboxDetailController', function($scope, $stateParams, Restangular, $http){
+.controller('InboxDetailController', function($scope, $stateParams, Restangular, $http, stripe){
 
 
 
@@ -24,7 +24,8 @@ angular.module('app.inbox-detail', [])
     status['status'] = state;
     console.log(status);
     $http.put('/api/v1/bookings/' + $stateParams.id, status);
-  }
+  };
+
 
 	var initialize = function(){
 		getMessage();

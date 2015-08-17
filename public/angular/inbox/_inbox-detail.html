@@ -35,7 +35,7 @@
                     		<button class="btn btn-default" type="submit">Approved</button>
                     	</div>
                     	<div ng-if="results.host_id !== results.auth && results.status === 'Approved'">
-                    		<button class="btn btn-default" ng-click="updateBooking('Booked')" type="submit">Book</button>
+                    		<button class="btn btn-default" ng-click="book()" type="submit">Book</button>
                     	</div>
 
                         <!-- Booked  -->

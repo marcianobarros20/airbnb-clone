@@ -14,13 +14,16 @@ angular.module('app', [
     'app.inbox-detail',
     'app.room',
     'app.editlisting',
+    'app.payments',
     'cloudinary',
-    'angularFileUpload'
+    'angularFileUpload',
+    'angular-stripe',
+    'credit-cards'
 ])
 
 
-.config(['$stateProvider', '$urlRouterProvider', 'RestangularProvider', '$authProvider',
-    function($stateProvider, $urlRouterProvider, RestangularProvider, $authProvider) {
+.config(['$stateProvider', '$urlRouterProvider', 'RestangularProvider', '$authProvider', 'stripeProvider',
+    function($stateProvider, $urlRouterProvider, RestangularProvider, $authProvider, stripeProvider) {
         $stateProvider.
             state('home', {
             	url: '/',
@@ -87,11 +90,18 @@ angular.module('app', [
                 resolve: {
                   authenticated: authenticate
                 }
+            }).
+            state('payments', {
+                url: '/payments',
+                templateUrl: 'angular/payments/_payment.html',
+                controller: 'PaymentController'
             });
 
         $urlRouterProvider.otherwise('/');
 
         RestangularProvider.setBaseUrl('/api/v1');
+
+        stripeProvider.setPublishableKey('pk_test_Zv1o5Or0wriYZL1F5umOJeA6');
 
         $authProvider.facebook({
           clientId: '624059410963642'

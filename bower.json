@@ -23,6 +23,8 @@
     "satellizer": "latest",
     "angular-ui-calendar": "latest",
     "ng-file-upload": "2.2.x",
-    "cloudinary_ng": ">=0.1.1"
+    "cloudinary_ng": ">=0.1.1",
+    "angular-stripe": "~4.2.8",
+    "angular-stripe": "latest"
   }
 }

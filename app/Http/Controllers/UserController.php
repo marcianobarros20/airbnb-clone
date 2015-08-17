@@ -6,6 +6,7 @@ use App\User;
 use App\Listings;
 use App\Bookings;
 
+
 use DB;
 use Auth;
 use Illuminate\Http\Request;
@@ -86,6 +87,19 @@ class UserController extends Controller
 		//$token = $this->createToken($user);
 
 		//return response()->json(['token' => $token]);
+	}
+
+	public function charge(Request $request)
+	{
+		$token = $request->input('token');
+		$amount = $request->input('amount');
+
+		$user = User::find(1);
+
+		$user->charge(100, [
+			'source' => $token,
+			'receipt_email' => $user->email
+		]);
 	}
 	
 }
