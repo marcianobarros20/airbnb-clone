@@ -13,7 +13,6 @@ angular.module('index', [])
 		$auth.login({email: user.email, password: user.password})
 		.then(function() {
           $scope.modalInstance.dismiss('cancel');
-          $location.path('/users/edit/profile');
         })
         .catch(function(response) {
           $scope.alerts.push({
@@ -30,9 +29,13 @@ angular.module('index', [])
         name: user.name,
         email: user.email,
         password: user.password
-      }).then(function(){
-        $scope.modalInstance.dismiss('cancel');
-        $location.path('/user/edit/profile');
+      })
+      .then(function(){
+        $scope.layout = 'login';
+        $scope.alerts.push({
+          type: 'Success',
+          content: 'Your account has been successfully created. Please log in.'
+        })
       })
       .catch(function(response) {
         if (typeof response.data.message === 'object') {
@@ -51,11 +54,15 @@ angular.module('index', [])
           });
         }
       });
+      $auth.login({ user: user.email, password: user.password});
+      $scope.modalInstance.dismiss('cancel');
+      $location.path('/user/edit/profile');
   };
 
   $scope.logout = function(){
     $auth.logout();
     $http.get('/auth/logout');
+    $location.path('/');
   }
 
 	$scope.authenticate = function(provider){

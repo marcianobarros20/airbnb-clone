@@ -58,11 +58,9 @@ angular.module('app.editlisting', ['ui.calendar'])
             $scope.$apply();
           }
         }).success(function (data, status, headers, config) {
-          $rootScope.photos = $rootScope.photos || [];
           data.context = {custom: {photo: $scope.title}};
           file.result = data;
           $scope.list.images.push(data)
-          $rootScope.photos.push(data);
           if(!$scope.$$phase) {
             $scope.$apply();
           }

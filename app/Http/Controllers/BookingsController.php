@@ -81,7 +81,9 @@ class BookingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $bookings = Bookings::find($id);
+        $bookings->status = $request->input('status');
+        $bookings->save();
     }
 
     /**

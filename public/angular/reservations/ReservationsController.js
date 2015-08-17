@@ -1,6 +1,6 @@
 angular.module('app.reservations', [])
 
-.controller('ReservationsController', function($scope, Restangular, $location){
+.controller('ReservationsController', function($scope, Restangular, $location, $state){
 	
 	var getReservations = function(){
 		$scope.results = Restangular.one('user').getList('reservations').$object;
@@ -10,7 +10,9 @@ angular.module('app.reservations', [])
 		$scope.results = Restangular.one('user').getList('trips').$object;
 	}
 
-	console.log($location);
+	$scope.inbox = function(id){
+    	$state.go('inbox/:id', {'id': id});
+	}
 
 	if ($location.$$url == '/reservations'){
 		getReservations();

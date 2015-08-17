@@ -60,7 +60,7 @@ class MessagesController extends Controller
      */
     public function show($id)
     {
-        $bookings = Bookings::find($id)
+        $bookings = Bookings::where('bookings.id', '=', $id)
             ->join('users', 'users.id', '=', 'bookings.host_id')
             ->join('listings', 'listings.id', '=', 'bookings.id')
             ->select('bookings.id', 'bookings.checkin', 'bookings.checkout', 'bookings.status',
@@ -74,6 +74,7 @@ class MessagesController extends Controller
             ->get();
 
         $bookings['messages'] = $messages;
+        $bookings['auth']  = Auth::user()->id;
 
         return response()->json($bookings);   
     }

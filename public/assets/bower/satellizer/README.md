@@ -5,7 +5,7 @@
 [![Join the chat at https://gitter.im/sahat/satellizer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sahat/satellizer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](http://img.shields.io/travis/sahat/satellizer.svg?style=flat)](https://travis-ci.org/sahat/satellizer)
 [![Test Coverage](http://img.shields.io/codeclimate/coverage/github/sahat/satellizer.svg?style=flat)](https://codeclimate.com/github/sahat/satellizer)
-[![Version](http://img.shields.io/badge/version-0.11.3-orange.svg?style=flat)](https://www.npmjs.org/package/satellizer)
+[![Version](http://img.shields.io/badge/version-0.12.0-orange.svg?style=flat)](https://www.npmjs.org/package/satellizer)
 
 **Live Demo:** [https://satellizer.herokuapp.com](https://satellizer.herokuapp.com)
 
@@ -51,7 +51,7 @@ Alternatively, you may [download](https://github.com/sahat/satellizer/releases) 
 <!--[if lte IE 9]>
 <script src="//cdnjs.cloudflare.com/ajax/libs/Base64/0.3.0/base64.min.js"></script>
 <![endif]-->
-<script src="//cdn.jsdelivr.net/satellizer/0.11.3/satellizer.min.js"></script>
+<script src="//cdn.jsdelivr.net/satellizer/0.12.0/satellizer.min.js"></script>
 ```
 
 **Note:** Sattelizer uses [`window.atob()`](https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/atob) for decoding JSON Web Tokens. If you need to support *Internet Explorer 9*, then use Base64 polyfill above.
@@ -160,13 +160,13 @@ $authProvider.storage = 'localStorage'; // or 'sessionStorage'
 $authProvider.facebook({
   url: '/auth/facebook',
   authorizationEndpoint: 'https://www.facebook.com/v2.3/dialog/oauth',
-  redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host + '/',
+  redirectUri: (window.location.origin || window.location.protocol + '//' + window.location.host) + '/',
   scope: 'email',
   scopeDelimiter: ',',
   requiredUrlParams: ['display', 'scope'],
   display: 'popup',
   type: '2.0',
-  popupOptions: { width: 481, height: 269 }
+  popupOptions: { width: 580, height: 400 }
 });
 
 // Google
@@ -190,7 +190,7 @@ $authProvider.linkedin({
   authorizationEndpoint: 'https://www.linkedin.com/uas/oauth2/authorization',
   redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
   requiredUrlParams: ['state'],
-  scope: [],
+  scope: ['r_emailaddress'],
   scopeDelimiter: ' ',
   state: 'STATE',
   type: '2.0',
@@ -199,7 +199,10 @@ $authProvider.linkedin({
 
 // Twitter
 $authProvider.twitter({
+  name: 'twitter',
   url: '/auth/twitter',
+  authorizationEndpoint: 'https://api.twitter.com/oauth/authenticate',
+  redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
   type: '1.0',
   popupOptions: { width: 495, height: 645 }
 });
@@ -209,7 +212,7 @@ $authProvider.github({
   url: '/auth/github',
   authorizationEndpoint: 'https://github.com/login/oauth/authorize',
   redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
-  scope: [],
+  scope: ['user:email'],
   scopeDelimiter: ' ',
   type: '2.0',
   popupOptions: { width: 1020, height: 618 }
@@ -220,7 +223,7 @@ $authProvider.live({
   url: '/auth/live',
   authorizationEndpoint: 'https://login.live.com/oauth20_authorize.srf',
   redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
-  scope: ['wl.basic'],
+  scope: ['wl.emails'],
   scopeDelimiter: ' ',
   requiredUrlParams: ['display', 'scope'],
   display: 'popup',
@@ -347,7 +350,7 @@ authentication process works.
 
 <hr>
 
-<img src="http://indonesia-royal.com/wp-content/uploads/2014/06/twitter-bird-square-logo.jpg" height="70">
+<img src="https://g.twimg.com/Twitter_logo_blue.png" height="70">
 - Sign in at [https://apps.twitter.com](https://apps.twitter.com/)
 - Click on **Create New App**
 - Enter your *Application Name*, *Description* and *Website*

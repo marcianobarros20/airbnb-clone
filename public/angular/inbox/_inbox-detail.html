@@ -7,6 +7,14 @@
 		<div class="alert alert-info">
 			<p>The current status is: <strong>{{results.status}}</strong></p>
 		</div>
+		<div class="col-md-12">
+			<div ng-if="results.host_id === results.auth">
+				<h1>Reservations</h1>
+			</div>
+			<div ng-if="results.host_id !== results.auth">
+				<h1>Trips</h1>
+			</div>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-7">
@@ -14,8 +22,35 @@
                 <div class="panel-body chat-form">
                     <textarea class="form-control" ng-model="inbox.body" rows="3"></textarea>
                     <div class="pull-right">
-                        <button class="btn btn-default" type="submit">Approve / Decline</button>
-                        <button class="btn btn-default" ng-click="submitChat(inbox)" type="submit">Button</button>
+                    	<!-- Pending  -->
+                    	<div ng-if="results.host_id === results.auth && results.status == 'Pending'">
+                    		<button class="btn btn-default" ng-click="updateBooking('Approved')" type="submit">Approve</button>
+                    		<button class="btn btn-default" ng-click="updateBooking('Declined')" type="submit">Decline</button>
+                    	</div>
+                    	<div ng-if="results.host_id !== results.auth && results.status == 'Pending'">
+                    		<button class="btn btn-default" type="submit">Pending</button>
+                    	</div>
+                        <!-- Approved  -->
+                    	<div ng-if="results.host_id === results.auth && results.status === 'Approved'">
+                    		<button class="btn btn-default" type="submit">Approved</button>
+                    	</div>
+                    	<div ng-if="results.host_id !== results.auth && results.status === 'Approved'">
+                    		<button class="btn btn-default" ng-click="updateBooking('Booked')" type="submit">Book</button>
+                    	</div>
+
+                        <!-- Booked  -->
+                    	<div ng-if="results.status == 'Booked'">
+                    		<button class="btn btn-default btn-success" type="submit">Booked</button>
+                    	</div>
+                        <!-- Declined  -->
+                    	<div ng-if="results.status === 'Declined'">
+                    		<button class="btn btn-default btn-danger" type="submit">Declined</button>
+                    	</div>
+
+                    	<!-- Chat  -->
+                    	 <div>
+                        	<button class="btn btn-default" ng-click="submitChat(inbox)" type="submit">Button</button>
+                        </div>
                     </div>
                 </div>
             </div>

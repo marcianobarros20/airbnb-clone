@@ -53,6 +53,9 @@ class UserController extends Controller
 						->where('host_id', '=', Auth::user()->id)
 						->join('users', 'bookings.user_id', '=', 'users.id')
 						->join('listings', 'bookings.listing_id', '=', 'listings.id')
+						->select('bookings.status', 'users.name', 
+							'bookings.checkin', 'bookings.checkout',
+							'bookings.id', 'bookings.user_id', 'listings.title', 'listings.address')
 						->get();
 
 		return response()->json($reservations);
@@ -66,7 +69,7 @@ class UserController extends Controller
 						->join('listings', 'bookings.listing_id', '=', 'listings.id')
 						->select('bookings.status', 'users.name', 
 							'bookings.checkin', 'bookings.checkout',
-							'users.id', 'bookings.user_id', 'listings.title', 'listings.address')
+							'bookings.id', 'bookings.user_id', 'listings.title', 'listings.address')
 						->get();
 
 		return response()->json($trips);

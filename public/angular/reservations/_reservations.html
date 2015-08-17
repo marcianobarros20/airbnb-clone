@@ -19,9 +19,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="result in results">
+					<tr ng-repeat="result in results" ng-click="inbox(result.id)">
 						<td><span class="badge">{{result.status}}</span></td>
-						<td>{{result.date}}</td>
+						<td>{{result.id}}</td>
 						<td>{{result.name}}</td>
 						<td>{{result.address}}</td>
 					</tr>

@@ -46,10 +46,10 @@ angular.module('app', [
                 templateUrl: 'angular/search/_search.html',
                 controller: 'SearchController'
             }).
-            state('inbox', {
-                url: '/inbox',
-                templateUrl: 'angular/inbox/_inbox.html',
-                controller: 'InboxController'
+            state('inbox/:id', {
+                url: '/inbox/:id',
+                templateUrl: 'angular/inbox/_inbox-detail.html',
+                controller: 'InboxDetailController'
             }).
          
             state('listings', {
@@ -84,14 +84,6 @@ angular.module('app', [
                 url: '/trips',
                 templateUrl: 'angular/reservations/_reservations.html',
                 controller: 'ReservationsController',
-                resolve: {
-                  authenticated: authenticate
-                }
-            }).
-            state('trips/:hostid/inbox/:userid', {
-                url: '/trips/:hostid/inbox/:userid',
-                templateUrl: 'angular/inbox/_inbox-detail.html',
-                controller: 'InboxDetailController',
                 resolve: {
                   authenticated: authenticate
                 }

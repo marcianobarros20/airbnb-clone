@@ -1,25 +1,30 @@
 angular.module('app.inbox-detail', [])
 
-.controller('InboxDetailController', function($scope, $stateParams, Restangular){
+.controller('InboxDetailController', function($scope, $stateParams, Restangular, $http){
 
-	$scope.id = $stateParams.id;
 
-	var getMessage = function(id){
-    
-    $scope.results = Restangular.one('messages', 1).get().$object;
-    console.log($scope.results);
+
+	var getMessage = function(){
+    $scope.results = Restangular.one('messages', $stateParams.id).get().$object;
 	}
 
 
   var message = {};
+  var status  = {};
 
   $scope.submitChat = function (inbox) {
-    message['bookings_id']	  = 1;
+    message['bookings_id']	  = $stateParams.id;
     message['content']        = inbox.body;
     
     var Messages = Restangular.all('messages');
     Messages.post(message);
   };
+
+  $scope.updateBooking = function(state){
+    status['status'] = state;
+    console.log(status);
+    $http.put('/api/v1/bookings/' + $stateParams.id, status);
+  }
 
 	var initialize = function(){
 		getMessage();

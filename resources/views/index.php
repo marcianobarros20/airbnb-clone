@@ -33,9 +33,6 @@
     <script src="assets/bower/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
     <script src="assets/bower/blueimp-file-upload/js/jquery.fileupload.js"></script>
      -->
-    
-  
-    
     <!-- angular dependencies -->
     <script type="text/javascript" src="assets/bower/angular/angular.js"></script>
     <script type="text/javascript" src="assets/bower/angular-bootstrap/ui-bootstrap.js"></script>
@@ -47,7 +44,7 @@
     <script type="text/javascript" src="assets/bower/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script type="text/javascript" src="assets/bower/lodash/lodash.js"></script>
     <script type="text/javascript" src="assets/bower/moment/moment.js"></script>
-    <script src="assets/bower/fullcalendar/dist/fullcalendar.js"></script>
+    <script type="text/javascript" src="assets/bower/fullcalendar/dist/fullcalendar.js"></script>
 
     <!-- cloudinary angular plugin -->
     <script src="assets/bower/cloudinary_ng/js/angular.cloudinary.js"></script>

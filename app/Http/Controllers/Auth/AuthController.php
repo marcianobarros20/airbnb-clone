@@ -123,7 +123,6 @@ class AuthController extends Controller
         $user->password = Hash::make($request->input('password'));
         $user->save();
 
-        Auth::login($user);
         return response()->json(['token' => $this->createToken($user)]);
     }
 

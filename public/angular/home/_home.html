@@ -1,4 +1,7 @@
 <ng-include src="'angular/_shared/_top-nav.html'"></ng-include>
+<div ng-if="isAuthenticated()">
+    <ng-include src="'angular/_shared/dashboard.html'"></ng-include>
+</div>
 
 <div class="landing-pg">      
 
