@@ -1,5 +1,5 @@
 angular.module('app.editlisting', ['ui.calendar'])
-.controller('EditListController', function($scope, $upload, $stateParams, $rootScope, $anchorScroll, $location, Restangular, uiCalendarConfig){
+.controller('EditListController', function($scope, $state, $http, $upload, $stateParams, $rootScope, $anchorScroll, $location, Restangular, uiCalendarConfig){
 
   var id = $stateParams['id'];
   var getList = function(){
@@ -16,14 +16,14 @@ angular.module('app.editlisting', ['ui.calendar'])
   }
 
   $scope.updateList = function(){
-    if (id){
+    if (!id){
       var Listings = Restangular.all('listings');
       Listings.post($scope.list);
+      $location.path('/listings');
     } else {
       $http.put('api/v1/listings/' + id, $scope.list);
+      $state.reload();
     }
-   
-
   }
 
   var date = new Date();
@@ -103,6 +103,7 @@ angular.module('app.editlisting', ['ui.calendar'])
 
   var initialize = function(){
     if (id) {
+      $scope.status = true;
       getList();
     }
   };

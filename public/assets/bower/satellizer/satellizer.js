@@ -1,5 +1,5 @@
 /**
- * Satellizer 0.12.0
+ * Satellizer 0.12.1
  * (c) 2015 Sahat Yalkabov
  * License: MIT
  */
@@ -464,8 +464,6 @@
           };
 
           Oauth2.exchangeForToken = function(oauthData, userData) {
-            userData = { foo: { bar: { baz : 1 }}};
-
             var data = angular.extend({}, userData);
 
             angular.forEach(defaults.responseParams, function(value, key) {

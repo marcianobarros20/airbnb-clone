@@ -144,6 +144,27 @@ section#photos .listings-photos li {
 }
 
 
+/* inbox */
+
+.chat-form .btn {
+	float: left;
+	margin-right: 10px;
+}
+
+.chat-form .pull-right {
+	width: 35%;
+	margin-top: 10px;
+}
+
+.chat-name {
+	display: block;
+}
+
+.chat-inbox {
+	border-bottom: 1px solid #ddd;
+	padding: 1em 0;
+}
+
 /*misc*/
 
 .fc-toolbar h2 {

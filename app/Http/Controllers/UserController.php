@@ -92,14 +92,18 @@ class UserController extends Controller
 	public function charge(Request $request)
 	{
 		$token = $request->input('token');
-		$amount = $request->input('amount');
+		$amount = $request->input('amount') * 100;
+		$booking_id     = $request->input('booking_id');
 
-		$user = User::find(1);
-
-		$user->charge(100, [
+		$user = Auth::user();
+		$user->charge($amount, [
 			'source' => $token,
 			'receipt_email' => $user->email
 		]);
+
+		$bookings = Bookings::find($booking_id);
+		$bookings->status = 'Booked';
+		$bookings->save();
 	}
 	
 }

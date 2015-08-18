@@ -57,6 +57,7 @@ class ListingsController extends Controller
         $listings->city         =           $request->input('city');
         $listings->address      =        $request->input('address');
         $listings->user_id      =       Auth::user()->id;
+        $listings->status       =       'Listed';
         $listings->save();
 
         foreach($request['images'] as $image){
@@ -112,6 +113,7 @@ class ListingsController extends Controller
         $listings->home_type    =      $request->input('home_type');
         $listings->city         =           $request->input('city');
         $listings->address      =        $request->input('address');
+        $listings->status       =         $request->input('status');
         $listings->save();
 
         foreach($request['images'] as $image){

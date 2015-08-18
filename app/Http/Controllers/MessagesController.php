@@ -62,15 +62,16 @@ class MessagesController extends Controller
     {
         $bookings = Bookings::where('bookings.id', '=', $id)
             ->join('users', 'users.id', '=', 'bookings.host_id')
-            ->join('listings', 'listings.id', '=', 'bookings.id')
+            ->join('listings', 'listings.id', '=', 'bookings.listing_id')
             ->select('bookings.id', 'bookings.checkin', 'bookings.checkout', 'bookings.status',
-                'bookings.host_id', 'listings.price_cents', 'listings.title', 'listings.address',
-                'users.name', 'users.avatar')
+                'bookings.host_id', 'listings.title', 'listings.address', 'listings.city',
+                'users.name', 'users.avatar', 'bookings.total')
             ->first();
 
         $messages = Messages::where('bookings_id', '=', $bookings->id)
             ->join('users', 'users.id', '=', 'messages.id')
             ->select('users.avatar', 'users.name', 'users.id', 'messages.content', 'messages.created_at')
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         $bookings['messages'] = $messages;

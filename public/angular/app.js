@@ -42,7 +42,10 @@ angular.module('app', [
             state('user/edit/profile', {
                 url: '/users/edit/profile',
                 templateUrl: 'angular/users/edit/_user-edit.html',
-                controller: 'UserEditController'
+                controller: 'UserEditController',
+                 resolve: {
+                  authenticated: authenticate
+                }
             }).
             state('search/:location', {
                 url: '/search/:location?checkin&checkout',
@@ -52,7 +55,10 @@ angular.module('app', [
             state('inbox/:id', {
                 url: '/inbox/:id',
                 templateUrl: 'angular/inbox/_inbox-detail.html',
-                controller: 'InboxDetailController'
+                controller: 'InboxDetailController',
+                 resolve: {
+                  authenticated: authenticate
+                }
             }).
          
             state('listings', {
@@ -68,12 +74,18 @@ angular.module('app', [
             state('listing/new', {
                 url: '/listing/new',
                 templateUrl: 'angular/listings/edit/_edit-listing.html',
-                controller: 'EditListController'
+                controller: 'EditListController',
+                 resolve: {
+                  authenticated: authenticate
+                }
             }).
             state('listing/edit/:id', {
                 url: '/listing/edit/:id',
                 templateUrl: 'angular/listings/edit/_edit-listing.html',
-                controller: 'EditListController'
+                controller: 'EditListController',
+                 resolve: {
+                  authenticated: authenticate
+                }
             }).
             state('reservations', {
                 url: '/reservations',
@@ -91,10 +103,13 @@ angular.module('app', [
                   authenticated: authenticate
                 }
             }).
-            state('payments', {
-                url: '/payments',
+            state('payments/:id', {
+                url: '/payments/:id',
                 templateUrl: 'angular/payments/_payment.html',
-                controller: 'PaymentController'
+                controller: 'PaymentController',
+                resolve: {
+                    authenticated: authenticate
+                }
             });
 
         $urlRouterProvider.otherwise('/');
@@ -111,12 +126,11 @@ angular.module('app', [
           clientId: '631036554609-v5hm2amv4pvico3asfi97f54sc51ji4o.apps.googleusercontent.com'
         });
 
-        function authenticate($q, $location, $auth, $modal) {
+        function authenticate($q, $location, $auth) {
             var deferred = $q.defer();
 
             if (!$auth.isAuthenticated()) {
-                console.log($location);
-                $location.path('/access').search('redirect', $location.$$path);
+                $location.path('/');
             } else {
                 deferred.resolve();
             }

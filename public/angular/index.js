@@ -31,9 +31,9 @@ angular.module('index', [])
         password: user.password
       })
       .then(function(){
-        $scope.layout = 'login';
+        
         $scope.alerts.push({
-          type: 'Success',
+          type: 'success',
           content: 'Your account has been successfully created. Please log in.'
         })
       })
@@ -54,9 +54,9 @@ angular.module('index', [])
           });
         }
       });
-      $auth.login({ user: user.email, password: user.password});
-      $scope.modalInstance.dismiss('cancel');
-      $location.path('/user/edit/profile');
+
+      $scope.layout == 'login';
+      console.log($scope.layout);
   };
 
   $scope.logout = function(){

@@ -22,7 +22,8 @@ angular.module('app.room', [])
       'checkin': Date.parse($scope.checkin),
       'checkout': Date.parse($scope.checkout),
       'host_id': $scope.list['user_id'],
-      'status' : 'Pending'
+      'status' : 'Pending',
+      'total'  : $scope.getTotalPrice()
     };
 
     var Bookings = Restangular.all('bookings');

@@ -42,11 +42,12 @@ class BookingsController extends Controller
     {
         $bookings = new Bookings;
         $bookings->checkin      = $request->input('checkin');
-        $bookings->checkout      = $request->input('checkout');
+        $bookings->checkout     = $request->input('checkout');
         $bookings->host_id      = $request->input('host_id');
         $bookings->user_id      = Auth::user()->id;
         $bookings->listing_id   = $request->input('listings_id');
         $bookings->status       = $request->input('status');
+        $bookings->total        = $request->input('total');
         $bookings->save();
     }
 

@@ -37,7 +37,7 @@
 
 			<!-- photos -->
 			<section id="photos">
-			<h3>Listing Photos</h3>
+			<h3>Photos</h3>
 			<div id="direct_upload" 
 		    ng-file-drop
 		    ng-file-drag-over-class="dragOverClass($event)"
@@ -95,12 +95,12 @@
 				<h3>Type</h3>
 				<p>What will you be renting out?</p>
 				<div class="row">	
-					<div class="col-md-8">
-						<select ng-model="list.home_type">
-							<option value="One Bedroom">One Bedroom</option>
-							<option value="Entire Home">Entire Home</option>
-							<option value="Family Home">Family Home</option>
-							<option value="Couch">Couch</option>
+					<div class="col-md-6">
+						<select ng-model="list.home_type" class="form-control">
+							<option value="one_bedroom">One Bedroom</option>
+							<option value="entire_home">Entire Home</option>
+							<option value="family">Family Home</option>
+							<option value="couch">Couch</option>
 						</select>
 					</div>
 				</div>
@@ -132,6 +132,20 @@
 
 			</section>
 
+			<!-- status -->
+			<section ng-if="status">
+				<!-- Home Type -->
+				<h3>Status</h3>
+				<div class="row">	
+					<div class="col-md-6">
+						<select ng-model="list.status" class="form-control">
+							<option value="Listed">List</option>
+							<option value="Unlisted">Unlist</option>
+						</select>
+					</div>
+				</div>
+			</section>
+			<br>
 			<!-- Save -->
 			<section>
 				<button class="btn btn-lg btn-success" ng-click="updateList()">Submit</button>

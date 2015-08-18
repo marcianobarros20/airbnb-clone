@@ -1,6 +1,6 @@
 angular.module('app.inbox-detail', [])
 
-.controller('InboxDetailController', function($scope, $stateParams, Restangular, $http, stripe){
+.controller('InboxDetailController', function($scope, $state, $stateParams, Restangular, $http, stripe){
 
 
 
@@ -18,6 +18,7 @@ angular.module('app.inbox-detail', [])
     
     var Messages = Restangular.all('messages');
     Messages.post(message);
+    $state.reload();
   };
 
   $scope.updateBooking = function(state){
@@ -25,6 +26,10 @@ angular.module('app.inbox-detail', [])
     console.log(status);
     $http.put('/api/v1/bookings/' + $stateParams.id, status);
   };
+
+  $scope.book = function(){
+    $state.go('payments/:id', {'id': 5});
+  }
 
 
 	var initialize = function(){

@@ -1,9 +1,9 @@
 angular.module('app.payments', [])
 
-.controller('PaymentController', function($scope, $stateParams, $http, stripe){
+.controller('PaymentController', function($scope, $stateParams, $http, stripe, Restangular){
 
 	var getMessage = function(){
-    //$scope.results = Restangular.one('messages', $stateParams.id).get().$object;
+    $scope.results = Restangular.one('messages', $stateParams.id).get().$object;
 	}
 
   $scope.payment = {
@@ -19,7 +19,8 @@ angular.module('app.payments', [])
         var payment = angular.copy($scope.payment);
         payment.card = void 0;
         payment.token = token.id;
-        payment.amount = 100;
+        payment.amount = $scope.results.total;
+        payment.booking_id = $scope.results.id;
         return $http.post('/api/v1/payments', payment);
       })
       .then(function (payment) {

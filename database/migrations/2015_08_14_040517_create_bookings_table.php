@@ -21,6 +21,7 @@ class CreateBookingsTable extends Migration
             $table->bigInteger('checkin');
             $table->bigInteger('checkout');
             $table->string('status');
+            $table->integer('total');
             $table->timestamps();
         });
     }
