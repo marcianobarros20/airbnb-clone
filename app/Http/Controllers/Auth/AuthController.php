@@ -164,7 +164,6 @@ class AuthController extends Controller
                 $user->name = $user->name || $profile['name'];
                 $user->save();
                 return response()->json(['token' => $this->createToken($user)]);
-                Auth::loginUsingId($user->id);
             }
         }
         // Step 3b. Create a new user account or return an existing one.

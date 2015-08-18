@@ -25,7 +25,7 @@ angular.module('app.inbox-detail', [])
   };
 
   $scope.book = function(){
-    $state.go('payments/:id', {'id': 5});
+    $state.go('payments/:id', {'id': $stateParams.id});
   }
 
 
