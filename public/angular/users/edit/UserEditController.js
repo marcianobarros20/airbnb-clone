@@ -1,16 +1,21 @@
 angular.module('app.useredit', [])
 
-.controller('UserEditController', function($scope, Restangular, $http, $upload){
+.controller('UserEditController', function($scope, Restangular, $state, $http, $upload){
 
 
 	var user = Restangular.one('user').get().$object;
 
-
 	$scope.user = user;
 
 	$scope.saveUser = function(){
-		console.log($scope.user);
 		$http.put('/api/v1/user', $scope.user);
+		$state.reload();
+		$scope.alerts.push({
+            content: 'You have successfully updated your user information.',
+            animation: 'fadeZoomFadeDown',
+            type: 'success',
+            duration: 3
+        });
 	};
 
 

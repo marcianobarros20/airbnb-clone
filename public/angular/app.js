@@ -119,7 +119,7 @@ angular.module('app', [
         stripeProvider.setPublishableKey('pk_test_Zv1o5Or0wriYZL1F5umOJeA6');
 
         $authProvider.facebook({
-          clientId: '624059410963642'
+          clientId: '399588066919160'
         });
 
         $authProvider.google({

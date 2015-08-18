@@ -12,6 +12,7 @@ body {
 	color: white;
 	border: none;
 	border-radius: 0;
+	z-index: 9;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -29,6 +30,11 @@ body {
 
 .navbar-form {
 	margin-top: 17px;
+}
+
+.collapse.in {
+	background-color: #143460;
+	z-index: 999;
 }
 
 /* dashboard */

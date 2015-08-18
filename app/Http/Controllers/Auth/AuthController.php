@@ -13,6 +13,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
+use GuzzleHttp;
+use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use Firebase\JWT\JWT;
 
 class AuthController extends Controller
@@ -140,7 +142,7 @@ class AuthController extends Controller
             'code' => $request->input('code'),
             'client_id' => $request->input('clientId'),
             'redirect_uri' => $request->input('redirectUri'),
-            'client_secret' => Config::get('app.facebook_secret')
+            'client_secret' => \Config::get('app.facebook_secret')
         ];
         $client = new GuzzleHttp\Client();
         // Step 1. Exchange authorization code for access token.
@@ -150,32 +152,37 @@ class AuthController extends Controller
         // Step 3a. If user is already signed in then link accounts.
         if ($request->header('Authorization'))
         {
-            $user = User::where('facebook', '=', $profile['id']);
-            if ($user->first())
+            $user = User::where('facebook', '=', $profile['id'])->first();
+            if ($user)
             {
                 return response()->json(['message' => 'There is already a Facebook account that belongs to you'], 409);
+            } else {
+                $token = explode(' ', $request->header('Authorization'))[1];
+                $payload = (array) JWT::decode($token, \Config::get('app.token_secret'), array('HS256'));
+                $user = User::find($payload['sub']);
+                $user->facebook = $profile['id'];
+                $user->name = $user->name || $profile['name'];
+                $user->save();
+                return response()->json(['token' => $this->createToken($user)]);
+                Auth::loginUsingId($user->id);
             }
-            $token = explode(' ', $request->header('Authorization'))[1];
-            $payload = (array) JWT::decode($token, Config::get('app.token_secret'), array('HS256'));
-            $user = User::find($payload['sub']);
-            $user->facebook = $profile['id'];
-            $user->displayName = $user->displayName || $profile['name'];
-            $user->save();
-            return response()->json(['token' => $this->createToken($user)]);
         }
         // Step 3b. Create a new user account or return an existing one.
         else
         {
-            $user = User::where('facebook', '=', $profile['id']);
-            if ($user->first())
+            $user = User::where('facebook', '=', $profile['id'])->first();
+            if ($user)
             {
+                Auth::loginUsingId($user->id);
                 return response()->json(['token' => $this->createToken($user->first())]);
+            } else {
+                $user = new User;
+                $user->facebook = $profile['id'];
+                $user->name = $profile['name'];
+                $user->save();
+                Auth::loginUsingId($user->id);
+                return response()->json(['token' => $this->createToken($user)]);
             }
-            $user = new User;
-            $user->facebook = $profile['id'];
-            $user->displayName = $profile['name'];
-            $user->save();
-            return response()->json(['token' => $this->createToken($user)]);
         }
     }
 }

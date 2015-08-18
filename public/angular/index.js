@@ -31,7 +31,6 @@ angular.module('index', [])
         password: user.password
       })
       .then(function(){
-        
         $scope.alerts.push({
           type: 'success',
           content: 'Your account has been successfully created. Please log in.'
@@ -54,9 +53,7 @@ angular.module('index', [])
           });
         }
       });
-
       $scope.layout == 'login';
-      console.log($scope.layout);
   };
 
   $scope.logout = function(){
