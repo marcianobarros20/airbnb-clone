@@ -178,6 +178,7 @@ class AuthController extends Controller
                 $user = new User;
                 $user->facebook = $profile['id'];
                 $user->name = $profile['name'];
+                $user->avatar = 'http://graph.facebook.com/' . $profile['id'] . '/picture?type=large';
                 $user->save();
                 Auth::loginUsingId($user->id);
                 return response()->json(['token' => $this->createToken($user)]);

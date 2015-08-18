@@ -70,6 +70,19 @@ angular.module('app.editlisting', ['ui.calendar'])
       });
   });
 
+  $scope.getLocation = function(val) {
+      return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+        params: {
+          address: val,
+          sensor: false
+        }
+      }).then(function(response){
+        return response.data.results.map(function(item){
+          return item.formatted_address;
+        });
+      });
+  };
+
   /* Modify the look and fill of the dropzone when files are being dragged over it */
   $scope.dragOverClass = function($event) {
       var items = $event.dataTransfer.items;

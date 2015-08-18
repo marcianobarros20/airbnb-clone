@@ -25,18 +25,8 @@ angular.module('app.useredit', [])
 		  url: "https://api.cloudinary.com/v1_1/world-lens/upload",
 		  data: {upload_preset: 'y5t7m24f'},
 		  file: $scope.file
-		}).progress(function (e) {
-		  file.progress = Math.round((e.loaded * 100.0) / e.total);
-		  file.status = "Uploading... " + file.progress + "%";
-		  if(!$scope.$$phase) {
-		    $scope.$apply();
-		  }
 		}).success(function (data, status, headers, config) {
-			console.log($scope.user);
-		  	data.context = {custom: {photo: $scope.title}};
-			file.result = data;
-			$scope.user['images'] = data['url'];
-
+			$scope.user['avatar'] = data['url'];
 		  if(!$scope.$$phase) {
 		    $scope.$apply();
 		  }

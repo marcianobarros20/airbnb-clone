@@ -82,6 +82,7 @@ class UserController extends Controller
 		$user->name  	= $request->input('name');
 		$user->email 	= $request->input('email');
 		$user->gender 	= $request->input('gender');
+		$user->avatar	= $request->input('avatar');
 		$user->save();
 	}
 

@@ -154,6 +154,10 @@ section#photos .listings-photos li {
 }
 
 
+ul.listing-photos {
+	margin-top: 15px;
+}
+
 /* inbox */
 
 .chat-form .btn {
@@ -173,6 +177,13 @@ section#photos .listings-photos li {
 .chat-inbox {
 	border-bottom: 1px solid #ddd;
 	padding: 1em 0;
+}
+
+/* user profile */
+
+.user-avatar {
+	max-height: 250px;
+	max-width: 250px;
 }
 
 /*misc*/
