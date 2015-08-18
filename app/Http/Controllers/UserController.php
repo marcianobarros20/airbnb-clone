@@ -83,10 +83,6 @@ class UserController extends Controller
 		$user->email 	= $request->input('email');
 		$user->gender 	= $request->input('gender');
 		$user->save();
-
-		//$token = $this->createToken($user);
-
-		//return response()->json(['token' => $token]);
 	}
 
 	public function charge(Request $request)

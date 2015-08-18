@@ -2,6 +2,9 @@
 <ng-include src="'angular/_shared/dashboard.html'"></ng-include>
 
 <div class="container page reservation-page">
+	<div ng-if="request" class="alert alert-success">
+		<strong>Congrats!</strong> You have officially requested to book your trip. Please click on the trip and send a friendly message to your host explaining who you are and why you plan to visit.
+	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="panel-title">

@@ -96,7 +96,7 @@ angular.module('app', [
                 }
             }).
             state('trips', {
-                url: '/trips',
+                url: '/trips?success',
                 templateUrl: 'angular/reservations/_reservations.html',
                 controller: 'ReservationsController',
                 resolve: {

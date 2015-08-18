@@ -46,8 +46,9 @@
 			  </div>
 			  <div class="row">
 			  	<div class="col-md-12">
-			  		
-			  		<button class="btn btn-lg btn-success" ng-click="book()">Request to Book ${{getTotalPrice()}}</button>
+			  		<button ng-if="!isAuthenticated()" class="btn btn-lg btn-success" ng-click="loginModal('sm')">Request to Book ${{getTotalPrice() | number}}</button>
+					<!-- Logged In -->
+			  		<button ng-if="isAuthenticated()" class="btn btn-lg btn-success" ng-click="book()">Request to Book ${{getTotalPrice() | number}}</button>
 			  	</div>
 			  </div>
 		</div>

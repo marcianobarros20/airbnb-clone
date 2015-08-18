@@ -29,7 +29,7 @@ angular.module('app.room', [])
     var Bookings = Restangular.all('bookings');
     Bookings.post(booking);
 
-    $state.go('trips');
+    $state.go('trips', {'success': 'true'});
   }
 
   $scope.open = function($event, open) {
