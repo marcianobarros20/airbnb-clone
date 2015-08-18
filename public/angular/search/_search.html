@@ -43,16 +43,16 @@
 						<div class="btn btn-default" ng-click="filterRoomType('')"> All</div>
 					</li>
 					<li>
-						<div class="btn btn-default" ng-click="filterRoomType('one_bedroom')"><span></span> One Bedroom</div>
+						<div class="btn btn-default" ng-click="filterRoomType('One Bedroom')"><span></span> One Bedroom</div>
 					</li>
 					<li>
-						<div class="btn btn-default" ng-click="filterRoomType('entire_home')"><span></span> Entire home/apt</div>
+						<div class="btn btn-default" ng-click="filterRoomType('Entire Home')"><span></span> Entire home/apt</div>
 					</li>
 					<li>
-						<div class="btn btn-default" ng-click="filterRoomType('family_home')"><span></span> Family</div>
+						<div class="btn btn-default" ng-click="filterRoomType('Family Home')"><span></span> Family</div>
 					</li>
 					<li>
-						<div class="btn btn-default" ng-click="filterRoomType('couch')"><span></span> Couch</div>
+						<div class="btn btn-default" ng-click="filterRoomType('Couch')"><span></span> Couch</div>
 					</li>
 				</ul>
 			</div>
@@ -79,8 +79,8 @@
 											| filter:{home_type:home_type}
 											| filter:{price_cents: priceSlider.max}:max
 											| filter:{price_cents: priceSlider.min}:min)" class="col-md-4 col-sm-4">
-								<div class="thumbnail" ng-click="checkPlace(listing.id)">
-									<img class="img-responsive" ng-src="{{listing.photos[0]}}">
+								<div class="thumbnail listing-thumbnail" ng-click="checkPlace(listing.id)">
+									<img class="img-responsive" ng-src="{{listing.url}}">
 									<div class="listing-price"><span>${{listing.price_cents}}</span></div>
 									<div class="caption">
 										<p>{{listing.title}}</p>

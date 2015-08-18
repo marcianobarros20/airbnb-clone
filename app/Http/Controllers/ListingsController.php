@@ -144,9 +144,11 @@ class ListingsController extends Controller
             ->lists('listing_id');
 
         $listings = DB::table('listings')
-            ->where('city', 'LIKE', '%'.$location.'%')
-            ->where('status', '=', 'Listed')
-            ->whereNotIn('id', $booked)
+            ->where('listings.city', 'LIKE', '%'.$location.'%')
+            ->join('listings_photos', 'listings_photos.listings_id', '=', 'listings.id')
+            ->where('listings.status', '=', 'Listed')
+            ->groupBy('listings.id')
+            ->whereNotIn('listings.id', $booked)
             ->get();
 
        return response()->json($listings);

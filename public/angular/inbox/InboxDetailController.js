@@ -2,12 +2,9 @@ angular.module('app.inbox-detail', [])
 
 .controller('InboxDetailController', function($scope, $state, $stateParams, Restangular, $http, stripe){
 
-
-
 	var getMessage = function(){
     $scope.results = Restangular.one('messages', $stateParams.id).get().$object;
 	}
-
 
   var message = {};
   var status  = {};
@@ -23,8 +20,8 @@ angular.module('app.inbox-detail', [])
 
   $scope.updateBooking = function(state){
     status['status'] = state;
-    console.log(status);
     $http.put('/api/v1/bookings/' + $stateParams.id, status);
+    $state.reload();
   };
 
   $scope.book = function(){

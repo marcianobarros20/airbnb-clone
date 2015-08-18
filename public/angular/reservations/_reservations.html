@@ -22,9 +22,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="result in results" ng-click="inbox(result.id)">
+					<tr ng-repeat="result in results | orderBy:'checkin'" ng-click="inbox(result.id)">
 						<td><span class="badge">{{result.status}}</span></td>
-						<td>{{result.id}}</td>
+						<td>{{result.checkin | date : 'MMM, dd'}} - {{result.checkout | date}}</td>
 						<td>{{result.name}}</td>
 						<td>{{result.address}}</td>
 					</tr>

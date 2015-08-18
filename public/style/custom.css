@@ -95,7 +95,7 @@ body {
         border-width: 0 100px 100px 0;
         border-color: transparent rgba(220, 187, 115, 0.86) transparent transparent;
         font-size: 22px;
-        right: 0;
+        right: 16px;
 }
 
 
@@ -105,7 +105,11 @@ body {
           top: 13px;
           color: white;
         
-  }
+}
+
+.listing-thumbnail {
+	cursor: pointer;
+}
 
 .search-results .listing-price .thumbnail {
   	position: relative;
@@ -158,7 +162,7 @@ section#photos .listings-photos li {
 }
 
 .chat-form .pull-right {
-	width: 35%;
+	width: 45%;
 	margin-top: 10px;
 }
 
