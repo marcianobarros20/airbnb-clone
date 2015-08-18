@@ -68,8 +68,8 @@ class MessagesController extends Controller
                 'users.name', 'users.avatar', 'bookings.total')
             ->first();
 
-        $messages = Messages::where('bookings_id', '=', $bookings->id)
-            ->join('users', 'users.id', '=', 'messages.id')
+        $messages = Messages::where('messages.bookings_id', '=', $bookings->id)
+            ->join('users', 'users.id', '=', 'messages.user_id')
             ->select('users.avatar', 'users.name', 'users.id', 'messages.content', 'messages.created_at')
             ->orderBy('created_at', 'DESC')
             ->get();
