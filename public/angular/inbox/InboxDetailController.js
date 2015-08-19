@@ -1,4 +1,4 @@
-angular.module('app.inbox-detail', [])
+angular.module('app.inboxdetail', [])
 
 .controller('InboxDetailController', function($scope, $state, $stateParams, Restangular, $http, stripe){
 

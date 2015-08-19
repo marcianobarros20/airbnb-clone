@@ -11,7 +11,7 @@ angular.module('app', [
     'app.inbox',
     'app.listings',
     'app.reservations',
-    'app.inbox-detail',
+    'app.inboxdetail',
     'app.room',
     'app.editlisting',
     'app.payments',
