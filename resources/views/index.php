@@ -62,7 +62,7 @@
     <script type="text/javascript" src="angular/index.js"></script>
     <script type="text/javascript" src="angular/home/HomeController.js"></script>
     <script type="text/javascript" src="angular/inbox/InboxController.js"></script>
-    <script type="text/javascript" src="angular/inbox/inboxDetailController.js"></script>
+    <script type="text/javascript" src="angular/inbox/InboxDetailController.js"></script>
     <script type="text/javascript" src="angular/listings/ListingController.js"></script>
     <script type="text/javascript" src="angular/listings/edit/EditListController.js"></script>
     <script type="text/javascript" src="angular/listings/room/RoomController.js"></script>
