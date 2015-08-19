@@ -1,7 +1,7 @@
 <ng-include src="'angular/_shared/_top-nav.html'"></ng-include>
 <ng-include src="'angular/_shared/dashboard.html'"></ng-include>
 
-<div class="container">
+<div class="container page">
 	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.content}}</alert>
 	<form class="form-horizontal">
 	  <div class="form-group">

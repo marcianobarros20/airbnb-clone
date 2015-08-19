@@ -3,7 +3,7 @@ angular.module('app.room', [])
 
   $scope.checkin  = new Date(parseInt($stateParams['checkin']));
   $scope.checkout = new Date(parseInt($stateParams['checkout']));
-
+  
   var listing = Restangular.one('listings', $stateParams['id']);
 	
   var getList = function(){

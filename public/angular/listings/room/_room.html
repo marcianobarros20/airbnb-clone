@@ -1,6 +1,6 @@
 <ng-include src="'angular/_shared/_top-nav.html'"></ng-include>
 
-<div class="container page room-page">
+<div class="container page room-page" ng-if="list.status == 'Listed'">
 	<!-- Room Image -->
 	<section class="row">
 		<div class="col-md-7 col-lg-8">
@@ -85,4 +85,10 @@
 			</div>
 		</div>
 	</section>
+</div>
+
+<div class="container page" ng-if="list.status == 'Unlisted'">
+	<div class="alert alert-danger">
+		This listing is no longer available. Please try another place.
+	</div>
 </div>

@@ -3,6 +3,9 @@
 body {
 	font-family: 'Roboto';
 }
+.page {
+	min-height: 400px;
+}
 
 /* top navigation */
 

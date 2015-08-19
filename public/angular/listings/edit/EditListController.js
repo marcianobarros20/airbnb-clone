@@ -49,7 +49,7 @@ angular.module('app.editlisting', ['ui.calendar'])
       $scope.files.forEach(function(file){
         $scope.upload = $upload.upload({
           url: "https://api.cloudinary.com/v1_1/world-lens/image/upload",
-          data: {upload_preset: 'gxramofi', tags: 'myphotoalbum', context:'photo=' + $scope.title},
+          data: {upload_preset: 'gxramofi'},
           file: file
         }).progress(function (e) {
           file.progress = Math.round((e.loaded * 100.0) / e.total);
@@ -65,7 +65,7 @@ angular.module('app.editlisting', ['ui.calendar'])
             $scope.$apply();
           }
         }).error(function(data, status, headers, config){
-          console.log('error' + status + ' data' + config);
+          console.log('error');
         });
       });
   });

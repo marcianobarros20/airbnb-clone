@@ -1,6 +1,6 @@
 angular.module('app.payments', [])
 
-.controller('PaymentController', function($scope, $stateParams, $http, stripe, Restangular){
+.controller('PaymentController', function($scope, $stateParams, $http, stripe, $state, Restangular){
 
 	var getMessage = function(){
     $scope.results = Restangular.one('messages', $stateParams.id).get().$object;
@@ -24,7 +24,8 @@ angular.module('app.payments', [])
         return $http.post('/api/v1/payments', payment);
       })
       .then(function (payment) {
-        console.log('successfully submitted payment for $', payment.amount);
+        $state.go('inbox', {id: $stateParams['id']});
+        
       })
       .catch(function (err) {
         if (err.type && /^Stripe/.test(err.type)) {
