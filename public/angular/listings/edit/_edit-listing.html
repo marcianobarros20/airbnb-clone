@@ -29,8 +29,10 @@
 					<div class="col-md-4 col-middle">
 				      <div class="input-group">
 				        <span class="input-group-addon">$</span>
-				        <input class="form-control" type="text" ng-model="list.price_cents">
+				        <input class="form-control" type="integer" required ng-minlength="20" ng-maxlength="400" type="text" ng-model="list.price_cents">
 				      </div>
+				      <p ng-show="userForm.username.$error.minlength" class="help-block">The price is too low.</p>
+  					  <p ng-show="userForm.username.$error.maxlength" class="help-block">The price is too high. You will get higher bookings if you lower your price.</p>
 				    </div>
 				</div>
 			</section>

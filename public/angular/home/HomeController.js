@@ -11,6 +11,16 @@ angular.module('app.home', [])
 		});
 	}
 
+  var fiveDays = new Date(new Date().getTime()+(5*24*60*60*1000));
+
+  $scope.searchCity = function(loc){
+    $state.go('search/:location', {
+      'location': loc,
+      'checkin': Date.parse(new Date()),
+      'checkout': Date.parse(fiveDays)
+    })
+  }
+
   $scope.cities = ['Chicago', 'Los Angeles', 'New York', 'San Francisco'];
 
 	$scope.today = function() {
