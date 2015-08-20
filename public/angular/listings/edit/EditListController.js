@@ -6,9 +6,76 @@ angular.module('app.editlisting', ['ui.calendar'])
 		$scope.list = Restangular.one('listings', id).get().$object;
 	};
 
+  var newbooked = [];
+  var booked = {};
+
+  var bookings = function(){
+      $http.get('api/v1/bookings' + id).success(function(data){
+        $scope.bookings = data;
+      });
+  }
+
+  console.log(bookings());
+ 
+  
+  console.log($scope.bookings);
+  //console.log(newbooked);
+
   $scope.list = {
     'images': []
   };
+
+  
+  var book = [
+    {
+      "id": 2,
+      "user_id": 2,
+      "host_id": 1,
+      "listing_id": 2,
+      "checkin": "1439825178000",
+      "checkout": "1440478800000",
+      "status": "Listed",
+      "total": 0,
+      "created_at": "2015-08-17 15:27:17",
+      "updated_at": "2015-08-20 18:43:21",
+      "title": "Comfortable Place in Streeterville",
+      "price_cents": 89,
+      "summary": "An awesome place",
+      "beds": 0,
+      "home_type": "One Bedroom",
+      "city": "Chicago, IL",
+      "address": "North Rush Street, Chicago, IL 60611, USA"
+    }, 
+    {
+      "id": 2,
+      "user_id": 2,
+      "host_id": 4,
+      "listing_id": 2,
+      "checkin": "1439825178000",
+      "checkout": "1440478800000",
+      "status": "Listed",
+      "total": 0,
+      "created_at": "2015-08-17 15:27:17",
+      "updated_at": "2015-08-20 18:43:21",
+      "title": "Comfortable Place in Streeterville",
+      "price_cents": 89,
+      "summary": "An awesome place",
+      "beds": 0,
+      "home_type": "One Bedroom",
+      "city": "Chicago, IL",
+      "address": "North Rush Street, Chicago, IL 60611, USA"
+    }
+  ];
+
+  angular.forEach(book, function(key, value){
+    console.log(key['checkin']);
+    booked['start'] = new Date(Number(key['checkin']));
+    booked['end']   = new Date(Number(key['checkout']));
+    booked['title'] = key['name'];
+    booked['url']   = '#/inbox/' + key['id'];
+  });
+
+  //console.log(booked);
 
   $scope.scrollTo = function(id){
     $location.hash(id);
@@ -31,12 +98,10 @@ angular.module('app.editlisting', ['ui.calendar'])
   var m = date.getMonth();
   var y = date.getFullYear();
   
-  /* event source that pulls from google.com */
   $scope.eventSources = 
       {
           events: [
-              {title: 'John Doe', start: new Date(y, m, 17), end: new Date(y, m, 24),allDay: false},
-              {title: 'Suzy Cae', start: new Date(y, m, 28), end: new Date(y, m, 30), url: 'http://google.com/'}
+              booked
           ],
           color: '#666F7A',
           textColor: 'black',
@@ -58,8 +123,6 @@ angular.module('app.editlisting', ['ui.calendar'])
             $scope.$apply();
           }
         }).success(function (data, status, headers, config) {
-          data.context = {custom: {photo: $scope.title}};
-          file.result = data;
           $scope.list.images.push(data)
           if(!$scope.$$phase) {
             $scope.$apply();
@@ -71,13 +134,11 @@ angular.module('app.editlisting', ['ui.calendar'])
   });
 
   $scope.getLocation = function(val) {
-      return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
-        params: {
-          address: val,
-          sensor: false
-        }
+      return $.ajax('http://maps.googleapis.com/maps/api/geocode/json?address=' + val + '&sensor=false', {
+        method: 'GET',
+        type: 'json'
       }).then(function(response){
-        return response.data.results.map(function(item){
+        return response.results.map(function(item){
           return item.formatted_address;
         });
       });

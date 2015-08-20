@@ -59,7 +59,12 @@ class BookingsController extends Controller
      */
     public function show($id)
     {
-        //
+        $bookings = Bookings::where('listing_id', '=', $id)
+        ->join('listings', 'listings.id', '=', 'bookings.listing_id')
+        ->join('users', 'users.id', '=', 'bookings.user_id')
+        ->select('checkin', 'checkout', 'users.name', 'bookings.id')
+        ->get();
+        return response()->json($bookings);
     }
 
     /**
