@@ -62,7 +62,9 @@ class BookingsController extends Controller
         $bookings = Bookings::where('listing_id', '=', $id)
         ->join('listings', 'listings.id', '=', 'bookings.listing_id')
         ->join('users', 'users.id', '=', 'bookings.user_id')
-        ->select('checkin', 'checkout', 'users.name', 'bookings.id')
+        ->where('bookings.status', '=', 'Approved')
+        ->orWhere('bookings.status', '=', 'Blocked')
+        ->select('checkin', 'checkout', 'users.name', 'bookings.id', 'bookings.status')
         ->get();
         return response()->json($bookings);
     }

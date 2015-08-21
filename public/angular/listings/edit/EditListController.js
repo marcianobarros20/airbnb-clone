@@ -6,76 +6,16 @@ angular.module('app.editlisting', ['ui.calendar'])
 		$scope.list = Restangular.one('listings', id).get().$object;
 	};
 
-  var newbooked = [];
-  var booked = {};
-
   var bookings = function(){
-      $http.get('api/v1/bookings' + id).success(function(data){
+      $http.get('api/v1/bookings/' + id).success(function(data){
         $scope.bookings = data;
       });
   }
-
-  console.log(bookings());
- 
-  
-  console.log($scope.bookings);
-  //console.log(newbooked);
 
   $scope.list = {
     'images': []
   };
 
-  
-  var book = [
-    {
-      "id": 2,
-      "user_id": 2,
-      "host_id": 1,
-      "listing_id": 2,
-      "checkin": "1439825178000",
-      "checkout": "1440478800000",
-      "status": "Listed",
-      "total": 0,
-      "created_at": "2015-08-17 15:27:17",
-      "updated_at": "2015-08-20 18:43:21",
-      "title": "Comfortable Place in Streeterville",
-      "price_cents": 89,
-      "summary": "An awesome place",
-      "beds": 0,
-      "home_type": "One Bedroom",
-      "city": "Chicago, IL",
-      "address": "North Rush Street, Chicago, IL 60611, USA"
-    }, 
-    {
-      "id": 2,
-      "user_id": 2,
-      "host_id": 4,
-      "listing_id": 2,
-      "checkin": "1439825178000",
-      "checkout": "1440478800000",
-      "status": "Listed",
-      "total": 0,
-      "created_at": "2015-08-17 15:27:17",
-      "updated_at": "2015-08-20 18:43:21",
-      "title": "Comfortable Place in Streeterville",
-      "price_cents": 89,
-      "summary": "An awesome place",
-      "beds": 0,
-      "home_type": "One Bedroom",
-      "city": "Chicago, IL",
-      "address": "North Rush Street, Chicago, IL 60611, USA"
-    }
-  ];
-
-  angular.forEach(book, function(key, value){
-    console.log(key['checkin']);
-    booked['start'] = new Date(Number(key['checkin']));
-    booked['end']   = new Date(Number(key['checkout']));
-    booked['title'] = key['name'];
-    booked['url']   = '#/inbox/' + key['id'];
-  });
-
-  //console.log(booked);
 
   $scope.scrollTo = function(id){
     $location.hash(id);
@@ -92,22 +32,6 @@ angular.module('app.editlisting', ['ui.calendar'])
       $state.reload();
     }
   }
-
-  var date = new Date();
-  var d = date.getDate();
-  var m = date.getMonth();
-  var y = date.getFullYear();
-  
-  $scope.eventSources = 
-      {
-          events: [
-              booked
-          ],
-          color: '#666F7A',
-          textColor: 'black',
-          backgroundColor: '#e2e2e2' 
-      }
-  ;
   
   $scope.$watch('files', function() {
       if (!$scope.files) return;
@@ -161,21 +85,71 @@ angular.module('app.editlisting', ['ui.calendar'])
       return hasFile ? "dragover" : "dragover-err";
     };
 
-  /* config object */
-  $scope.uiConfig = {
-    calendar:{
-      height: 450,
-      editable: true,
-      header:{
-        left: 'title',
-        center: '',
-        right: 'today prev,next'
-      }
-    }
-  };
+    function renderCalendar(){
 
+        $('#calendar').fullCalendar({
+
+            height: 450,
+            editable: true,
+            header:{
+              left: 'title',
+              center: '',
+              right: 'today prev,next'
+            },
+
+            selectable: true,
+            select: function(start, end, jsEvent, view){
+              var url = location.hash.slice(1);
+              var id = url.substring(url.lastIndexOf('/') + 1);
+              $http.post('/api/v1/listings/block/' + id, {
+                checkin: start._d,
+                checkout: end._d
+              });
+              location.reload();
+            },
+            events: function(start, end, timezone, callback) {
+                $.ajax({
+                    method: 'GET',
+                    url: 'api/v1/bookings/2',
+                    dataType: 'json',
+                    success: function(doc) {
+                        var events = [];
+                        $(doc).each(function() {
+                            if ($(this).attr('status') == 'Approved'){
+                               events.push({
+                                start: new Date(parseInt($(this).attr('checkin'))).toUTCString(),
+                                end: new Date(parseInt($(this).attr('checkout'))).toUTCString(),
+                                title: $(this).attr('name'),
+                                url: '#/inbox/' + $(this).attr('id'),
+                                allDay: true
+                              });
+                            } else {
+                              events.push({
+                                start: new Date(parseInt($(this).attr('checkin'))).toUTCString(),
+                                end: new Date(parseInt($(this).attr('checkout'))).toUTCString(),
+                                title: $(this).attr('status'),
+                                allDay: true
+                              });
+                            }
+                           
+                        });
+                        callback(events);
+                    }
+                });
+            },
+          eventClick: function(calEvent, jsEvent, view) {
+              if (calEvent.title == 'Blocked'){
+                console.log(calEvent);
+                console.log(calEvent.start._id);
+                console.log(view);
+                $(this).css('border-color', 'red');
+              }
+          }
+      });
+    }
 
   var initialize = function(){
+    renderCalendar();
     if (id) {
       $scope.status = true;
       getList();

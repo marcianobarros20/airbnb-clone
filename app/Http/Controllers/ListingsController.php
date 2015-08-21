@@ -124,6 +124,17 @@ class ListingsController extends Controller
         }
     }
 
+    public function block($id, Request $request)
+    {
+        $bookings = new Bookings;
+        $bookings->checkin      = strtotime($request->input('checkin')) * 1000;
+        $bookings->checkout     = strtotime($request->input('checkout')) * 1000;
+        $bookings->user_id      = Auth::user()->id;
+        $bookings->listing_id   = $id;
+        $bookings->status       = 'Blocked';
+        $bookings->save();
+    }
+
     /**
      * Remove the specified resource from storage. 1440651600000 < 1440910800000
      *
