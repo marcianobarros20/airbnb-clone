@@ -57,6 +57,10 @@ angular.module('app.editlisting', ['ui.calendar'])
       });
   });
 
+  $scope.removeImage = function(index){
+    $scope.list.images.splice(index, 1);
+  }
+
   $scope.getLocation = function(val) {
       return $.ajax('http://maps.googleapis.com/maps/api/geocode/json?address=' + val + '&sensor=false', {
         method: 'GET',

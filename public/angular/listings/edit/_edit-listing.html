@@ -68,7 +68,8 @@
 
 			<ul class="listings-photos">
 				<li ng-repeat="image in list.images">
-					<img ng-src="{{image.url}}" alt="" height="150" width="150">
+					<span ng-click="removeImage(index)"><i class="glyphicon glyphicon-remove-circle"></i></span>
+					<img ng-src="{{image.url}}" alt="" height="150" width="180">
 				</li>
 			</ul>
 			    
