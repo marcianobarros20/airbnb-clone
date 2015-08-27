@@ -24,6 +24,7 @@ angular.module('app.editlisting', ['ui.calendar'])
 
   $scope.updateList = function(){
     if (!id){
+      console.log($scope.list);
       var Listings = Restangular.all('listings');
       Listings.post($scope.list);
       $location.path('/listings');
@@ -39,7 +40,8 @@ angular.module('app.editlisting', ['ui.calendar'])
         $scope.upload = $upload.upload({
           url: "https://api.cloudinary.com/v1_1/world-lens/image/upload",
           data: {upload_preset: 'gxramofi'},
-          file: file
+          file: file,
+          skipAuthorization: true
         }).progress(function (e) {
           file.progress = Math.round((e.loaded * 100.0) / e.total);
           file.status = "Uploading... " + file.progress + "%";
@@ -112,14 +114,16 @@ angular.module('app.editlisting', ['ui.calendar'])
               location.reload();
             },
             events: function(start, end, timezone, callback) {
+                var url = location.hash.slice(1);
+                var id = url.substring(url.lastIndexOf('/') + 1);
                 $.ajax({
                     method: 'GET',
-                    url: 'api/v1/bookings/2',
+                    url: 'api/v1/bookings/' + id,
                     dataType: 'json',
                     success: function(doc) {
                         var events = [];
                         $(doc).each(function() {
-                            if ($(this).attr('status') == 'Approved'){
+                            if ($(this).attr('status') == 'Booked'){
                                events.push({
                                 start: new Date(parseInt($(this).attr('checkin'))).toUTCString(),
                                 end: new Date(parseInt($(this).attr('checkout'))).toUTCString(),
@@ -127,7 +131,7 @@ angular.module('app.editlisting', ['ui.calendar'])
                                 url: '#/inbox/' + $(this).attr('id'),
                                 allDay: true
                               });
-                            } else {
+                            } else if ($(this).attr('status') == 'Blocked') {
                               events.push({
                                 start: new Date(parseInt($(this).attr('checkin'))).toUTCString(),
                                 end: new Date(parseInt($(this).attr('checkout'))).toUTCString(),
