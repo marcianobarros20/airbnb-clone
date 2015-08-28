@@ -23,8 +23,9 @@ angular.module('app.useredit', [])
 
 		 $upload.upload({
 		  url: "https://api.cloudinary.com/v1_1/world-lens/upload",
-		  data: {upload_preset: 'y5t7m24f'},
-		  file: $scope.file
+		  data: {upload_preset: 'gxramofi'},
+		  file: $scope.file,
+		  skipAuthorization: true
 		}).success(function (data, status, headers, config) {
 			$scope.user['avatar'] = data['url'];
 		  if(!$scope.$$phase) {

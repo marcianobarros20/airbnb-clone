@@ -62,8 +62,8 @@ class ListingsController extends Controller
 
         foreach($request['images'] as $image){
             $listings_photos = new ListingsPhotos;
-            $listings_photos->url           = $image['url'];
-            $listings_photos->listing_id    = $listings->id;
+            $listings_photos->url            = $image['url'];
+            $listings_photos->listings_id    = $listings->id;
             $listings_photos->save();
         }
 
@@ -115,6 +115,10 @@ class ListingsController extends Controller
         $listings->address      =        $request->input('address');
         $listings->status       =         $request->input('status');
         $listings->save();
+
+
+        $listings_photos = ListingsPhotos::where('listings_id', '=', $id);
+        $listings_photos->forceDelete();
 
         foreach($request['images'] as $image){
             $listings_photos = new ListingsPhotos;
