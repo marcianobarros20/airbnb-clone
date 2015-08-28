@@ -17,9 +17,10 @@
 				</div>
 			</section>
 			<!-- Calendar -->
-			<section id="calendar">	
+			<section id="calendar-section">	
 				<h3>Calendar</h3>
-				<div ui-calendar="uiConfig.calendar" class="span6 calendar" ng-model="eventSources"></div> 
+				<p></p>
+				<div id="calendar"></div> 
 			</section>
 			<!-- Pricing -->
 			<section id="pricing">
@@ -29,8 +30,10 @@
 					<div class="col-md-4 col-middle">
 				      <div class="input-group">
 				        <span class="input-group-addon">$</span>
-				        <input class="form-control" type="text" ng-model="list.price_cents">
+				        <input class="form-control" type="integer" required ng-minlength="20" ng-maxlength="400" type="text" ng-model="list.price_cents">
 				      </div>
+				      <p ng-show="userForm.username.$error.minlength" class="help-block">The price is too low.</p>
+  					  <p ng-show="userForm.username.$error.maxlength" class="help-block">The price is too high. You will get higher bookings if you lower your price.</p>
 				    </div>
 				</div>
 			</section>
@@ -65,7 +68,8 @@
 
 			<ul class="listings-photos">
 				<li ng-repeat="image in list.images">
-					<img ng-src="{{image.url}}" alt="" height="150" width="150">
+					<span ng-click="removeImage(index)"><i class="glyphicon glyphicon-remove-circle"></i></span>
+					<img ng-src="{{image.url}}" alt="" height="150" width="180">
 				</li>
 			</ul>
 			    

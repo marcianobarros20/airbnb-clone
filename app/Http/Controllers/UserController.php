@@ -6,7 +6,7 @@ use App\User;
 use App\Listings;
 use App\Bookings;
 
-
+use Stripe\Stripe;
 use DB;
 use Auth;
 use Illuminate\Http\Request;
@@ -84,6 +84,19 @@ class UserController extends Controller
 		$user->gender 	= $request->input('gender');
 		$user->avatar	= $request->input('avatar');
 		$user->save();
+	}
+
+	public function createCustomer(Request $request)
+	{
+		\Stripe\Stripe::setApiKey(env('STRIPE_API_SECRET'));
+
+		// Create a Recipient
+		$recipient = \Stripe\Recipient::create(array(
+		  "name" => 'John Doe',
+		  "type" => "individual",
+		  "bank_account" => $request->input('token'),
+		  "email" => $request->input('email'))
+		);
 	}
 
 	public function charge(Request $request)

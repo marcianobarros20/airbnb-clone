@@ -35,6 +35,7 @@ Route::group(array('prefix' => 'api/v1'), function()
 	Route::get('user/reservations', 'UserController@getReservations');
 	Route::get('user/trips', 'UserController@getTrips');
 	Route::post('payments', 'UserController@charge');
+	Route::post('listings/block/{id}', 'ListingsController@block');
 	// other users
 	Route::get('user/{id}', 'UserController@showUser');
 
