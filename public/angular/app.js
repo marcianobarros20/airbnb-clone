@@ -60,7 +60,6 @@ angular.module('app', [
                   authenticated: authenticate
                 }
             }).
-         
             state('listings', {
                 url: '/listings',
                 templateUrl: 'angular/listings/_listings.html',
@@ -101,6 +100,14 @@ angular.module('app', [
                 controller: 'ReservationsController',
                 resolve: {
                   authenticated: authenticate
+                }
+            }).
+            state('reviews/:id', {
+                url: '/reviews/:id',
+                templateUrl: 'angular/reviews/_reviews.html',
+                controller: 'ReviewsController',
+                resolve: {
+                    authenticated: authenticate
                 }
             }).
             state('payments/:id', {

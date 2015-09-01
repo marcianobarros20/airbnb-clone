@@ -16,7 +16,6 @@ class CreateUserReviewsTable extends Migration
             $table->integer('user_id');
             $table->integer('reviewee_id');
             $table->text('comment');
-            $table->string('checkout');
             $table->timestamps();
         });
     }

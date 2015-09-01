@@ -14,7 +14,8 @@ class CreateListingsReviewsTable extends Migration
     {
         Schema::create('listing_reviews', function (Blueprint $table) {
             $table->integer('user_id');
-            $table->integer('listings_id');
+            $table->integer('listings_id')->unsigned();
+            $table->foreign('listings_id')->references('id')->on('listings');
             $table->text('comment');
             $table->timestamps();
         });

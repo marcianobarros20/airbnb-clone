@@ -4,32 +4,20 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-7">
-			<h1>Payment</h1>
+			<h1>Review</h1>
 			<form name="ccForm" ng-submit="charge()">
 		        <div class="form-group">
-		          <label for="card-number">Card Number</label>
-		          <input type="text" class="form-control" id="cardNumber" cc-number name="ccNumber" ng-model="payment.card.number">
+		          <label for="description">Describe Your Experience</label>
+		          <textarea ng-model="review.comment" class="form-control"></textarea>
 		        </div>
 
 		        <div class="form-group">
-		          <label for="cvc">CVC</label>
-		          <input type="text" class="form-control" id="cvc" cc-cvc cc-type="ccForm.ccNumber.ccType" name="ccCvc" ng-model="payment.card.cvc">
-		        </div>
-
-		        <div class="form-group">
-		          <label for="card-number">Expiration</label>
-		          <div class="row" cc-exp>
-		            <div class="col-xs-3">
-		              <input placeholder="MM" type="text" class="form-control" cc-exp-month name="ccExpMonth" ng-model="payment.card.exp_month">
-		            </div>
-		            <div class="col-xs-3">
-		              <input placeholder="YY" type="text" class="form-control" cc-exp-year name="ccExpYear" ng-model="payment.card.exp_year">
-		            </div>
-		          </div>
+		          <label for="user description">Email to Subject</label>
+		          <textarea ng-model="review.user" class="form-control"></textarea>
 		        </div>
 
 		        <div>
-		        	<input class="btn btn-success" type="submit" value="Book">
+		        	<input class="btn btn-success" type="submit" value="Submit Review">
 		        </div>
 		      </form>
 		</div>
