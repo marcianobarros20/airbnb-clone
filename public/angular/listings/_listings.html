@@ -9,7 +9,10 @@
         </div>
         <div class="panel-body">
           <a class="list-link" ng-href="#/listings/{{listing.id}}">{{listing.title}}</a>
-          <p class="edit-list"><a href="#/listing/edit/{{listing.id}}">Edit Listing</a></p>
+          <p class="edit-list">
+            <a href="#/listing/edit/{{listing.id}}">Edit Listing</a> |
+            <a href="#/listings/edit/{{listing.id}}#calendar">Manage Calendar</a>
+          </p>
         </div>
       </div>
       

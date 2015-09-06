@@ -2,6 +2,8 @@ angular.module('app.editlisting', ['ui.calendar'])
 .controller('EditListController', function($scope, $state, $http, $upload, $stateParams, $rootScope, $anchorScroll, $location, Restangular, uiCalendarConfig){
 
   var id = $stateParams['id'];
+  $scope.currentPath = $location.path();
+
   var getList = function(){
 		$scope.list = Restangular.one('listings', id).get().$object;
 	};
@@ -24,7 +26,6 @@ angular.module('app.editlisting', ['ui.calendar'])
 
   $scope.updateList = function(){
     if (!id){
-      console.log($scope.list);
       var Listings = Restangular.all('listings');
       Listings.post($scope.list);
       $location.path('/listings');

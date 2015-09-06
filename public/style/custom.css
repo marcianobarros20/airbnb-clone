@@ -75,9 +75,13 @@ body {
 	padding-top: 50px;
 }
 
+.form-bg .form-control {
+	height: 42px;
+}
+
 .form-bg .btn-search {
 	margin-top: 25px;
-	padding: 6px 25px;
+	padding: 9px 28px;
 	color: white;
 	background-color: #087a5c;
 	border-color: #087a5c;
@@ -208,9 +212,19 @@ ul.listings-photos {
 }
 
 
+/* responsiveness */
 
+@media (max-width: 750px) {
+	.landing-pg h1 {
+		font-size: 28px;
+	}
+}
 
-
+@media (max-width: 480px) {
+	.landing-pg {
+		height: 550px;
+	}
+}
 
 
 

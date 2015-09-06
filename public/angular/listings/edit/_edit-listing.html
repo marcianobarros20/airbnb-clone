@@ -16,25 +16,6 @@
 					</div>
 				</div>
 			</section>
-			<!-- Calendar -->
-			<section id="calendar-section">	
-				<h3>Calendar</h3>
-				<p></p>
-				<div id="calendar"></div> 
-			</section>
-			<!-- Pricing -->
-			<section id="pricing">
-				<h3>Set A Price for Your Space</h3>
-				<p>You can set a price based on your location, space, amenities, and your hospitality.</p>
-				<div class="row">	
-					<div class="col-md-4 col-middle">
-				      <div class="input-group">
-				        <span class="input-group-addon">$</span>
-				        <input class="form-control" type="integer" ng-model="list.price_cents">
-				      </div>
-				    </div>
-				</div>
-			</section>
 
 			<!-- photos -->
 			<section id="photos">
@@ -76,6 +57,20 @@
 			<!-- Basics -->
 			<section id="basics">
 
+			</section>
+
+			<!-- Pricing -->
+			<section id="pricing">
+				<h3>Set A Price for Your Space</h3>
+				<p>You can set a price based on your location, space, amenities, and your hospitality.</p>
+				<div class="row">	
+					<div class="col-md-4 col-middle">
+				      <div class="input-group">
+				        <span class="input-group-addon">$</span>
+				        <input class="form-control" type="integer" ng-model="list.price_cents">
+				      </div>
+				    </div>
+				</div>
 			</section>
 
 			<!-- Description -->
@@ -144,8 +139,20 @@
 			<br>
 			<!-- Save -->
 			<section>
-				<button class="btn btn-lg btn-success" ng-click="updateList()">Submit</button>
+				<button class="btn btn-lg btn-success" ng-click="updateList()">Submit Your Place</button>
 			</section>
+
+			<p>
+				<hr>
+			</p>
+
+			<!-- Calendar -->
+			<section id="calendar-section" ng-hide="currentPath === '/listing/new'">	
+				<h3>Calendar</h3>
+				<p>Click on the dates which are not available</p>
+				<div id="calendar"></div> 
+			</section>
+
 		</div>
 	</div>	
 </div>

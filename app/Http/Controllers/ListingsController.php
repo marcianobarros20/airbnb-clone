@@ -81,6 +81,10 @@ class ListingsController extends Controller
         $listing->user;
         $listing->reviews;
         $listing->images;
+        if (Auth::check()){
+            $listing->auth_id = Auth::user()->id;
+        }
+        
 
         return response()->json($listing);
     }
